@@ -307,11 +307,6 @@ export default function EducationTimeline() {
 
             {/* Modal Actions */}
             <div className="big-card-footer">
-              {selectedMilestone.marksheetId && (
-                <a href="#marksheets" className="btn btn-primary btn-sm" onClick={() => setSelectedMilestone(null)}>
-                  <i className="fa-solid fa-file-invoice"></i> View Verified Marksheet
-                </a>
-              )}
               <button className="btn btn-outline btn-sm" onClick={() => setSelectedMilestone(null)}>
                 Close
               </button>

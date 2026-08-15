@@ -1,5 +1,4 @@
 import React from 'react';
-import MarksheetSecurityShield from './MarksheetSecurityShield';
 
 export default function LightboxModal({ isOpen, imageSrc, caption, onClose }) {
   if (!isOpen) return null;
@@ -11,35 +10,21 @@ export default function LightboxModal({ isOpen, imageSrc, caption, onClose }) {
           <i className="fa-solid fa-xmark"></i>
         </button>
 
-        <MarksheetSecurityShield title={caption || 'Full Marksheet Document'} showBadge={true}>
-          <div
-            className="lightbox-image-container"
-            onContextMenu={(e) => e.preventDefault()}
-            onDragStart={(e) => e.preventDefault()}
-            style={{ position: 'relative', overflow: 'hidden' }}
-          >
-            <img
-              src={imageSrc}
-              alt={caption || 'Marksheet View'}
-              className="modal-img"
-              draggable="false"
-              onContextMenu={(e) => e.preventDefault()}
-              style={{
-                userSelect: 'none',
-                WebkitUserSelect: 'none',
-                display: 'block',
-                margin: '0 auto',
-                maxHeight: '75vh',
-                objectFit: 'contain'
-              }}
-            />
-          </div>
-        </MarksheetSecurityShield>
-
-        <div className="modal-caption">
-          <i className="fa-solid fa-shield-halved" style={{ marginRight: '6px', color: 'var(--color-peach)' }}></i>
-          {caption || 'Marksheet Full View'} (Protected Document)
+        <div className="lightbox-image-container">
+          <img
+            src={imageSrc}
+            alt={caption || 'Preview View'}
+            className="modal-img"
+            style={{
+              display: 'block',
+              margin: '0 auto',
+              maxHeight: '75vh',
+              objectFit: 'contain'
+            }}
+          />
         </div>
+
+        {caption && <div className="modal-caption">{caption}</div>}
       </div>
     </div>
   );

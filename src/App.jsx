@@ -3,7 +3,6 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import EducationTimeline from './components/EducationTimeline';
-import MarksheetGallery from './components/MarksheetGallery';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Certifications from './components/Certifications';
@@ -13,7 +12,6 @@ import LightboxModal from './components/LightboxModal';
 import {
   defaultProfile,
   defaultSemData,
-  defaultMarksheets,
   defaultProjects,
   defaultSkills,
   defaultCerts
@@ -22,7 +20,6 @@ import {
 export default function App() {
   const [profile, setProfile] = useState(defaultProfile);
   const [semData, setSemData] = useState(defaultSemData);
-  const [marksheets, setMarksheets] = useState(defaultMarksheets);
   const [projects, setProjects] = useState(defaultProjects);
   const [skills, setSkills] = useState(defaultSkills);
   const [certs, setCerts] = useState(defaultCerts);
@@ -49,7 +46,6 @@ export default function App() {
   useEffect(() => {
     fetch('/api/profile').then(res => res.json()).then(data => setProfile(data)).catch(() => {});
     fetch('/api/semester-status').then(res => res.json()).then(data => setSemData(data)).catch(() => {});
-    fetch('/api/marksheets').then(res => res.json()).then(data => setMarksheets(data)).catch(() => {});
     fetch('/api/projects').then(res => res.json()).then(data => setProjects(data)).catch(() => {});
     fetch('/api/skills').then(res => res.json()).then(data => setSkills(data)).catch(() => {});
     fetch('/api/certifications').then(res => res.json()).then(data => setCerts(data)).catch(() => {});
@@ -80,14 +76,13 @@ export default function App() {
         <div className="container">
           <div className="section-header">
             <span className="section-subtitle">Academic Record</span>
-            <h2 className="section-title">Education & Verified Marksheets</h2>
+            <h2 className="section-title">Education & Academic Journey</h2>
             <p className="section-description">
-              A complete timeline of my academic journey along with verified marksheets, main subject scores, total marks, Percentile Ranks (PR), and college SPIs.
+              A complete timeline of my academic journey along with main subject scores, total marks, Percentile Ranks (PR), and college SPIs.
             </p>
           </div>
 
           <EducationTimeline />
-          <MarksheetGallery marksheetsData={marksheets} onOpenLightbox={openLightbox} />
         </div>
       </section>
 
