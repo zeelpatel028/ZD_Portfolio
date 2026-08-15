@@ -86,11 +86,11 @@ export default function Contact({ profile, onShowToast }) {
             <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--color-peach)' }}>Send a Direct Message</h3>
             
             <form onSubmit={handleSubmit}>
-              <div class="form-group">
-                <label class="form-label">Your Name</label>
+              <div className="form-group">
+                <label className="form-label">Your Name</label>
                 <input
                   type="text"
-                  class="form-input"
+                  className="form-input"
                   required
                   placeholder="Enter your name"
                   value={formData.name}
@@ -98,11 +98,11 @@ export default function Contact({ profile, onShowToast }) {
                 />
               </div>
 
-              <div class="form-group">
-                <label class="form-label">Your Email</label>
+              <div className="form-group">
+                <label className="form-label">Your Email</label>
                 <input
                   type="email"
-                  class="form-input"
+                  className="form-input"
                   required
                   placeholder="Enter your email"
                   value={formData.email}
@@ -110,10 +110,10 @@ export default function Contact({ profile, onShowToast }) {
                 />
               </div>
 
-              <div class="form-group">
-                <label class="form-label">Message</label>
+              <div className="form-group">
+                <label className="form-label">Message</label>
                 <textarea
-                  class="form-textarea"
+                  className="form-textarea"
                   rows="4"
                   required
                   placeholder="Your message..."
@@ -122,8 +122,8 @@ export default function Contact({ profile, onShowToast }) {
                 ></textarea>
               </div>
 
-              <button type="submit" class="btn btn-primary" disabled={loading}>
-                <i class="fa-solid fa-paper-plane"></i> {loading ? 'Sending...' : 'Send Message'}
+              <button type="submit" className="btn btn-primary" disabled={loading}>
+                <i className="fa-solid fa-paper-plane"></i> {loading ? 'Sending...' : 'Send Message'}
               </button>
 
               {statusMsg && (

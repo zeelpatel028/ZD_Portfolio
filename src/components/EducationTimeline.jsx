@@ -138,10 +138,10 @@ export default function EducationTimeline() {
   ];
 
   return (
-    <div class="svg-timeline-wrapper">
+    <div className="svg-timeline-wrapper">
       {/* Timeline Section Header */}
       <div style={{ textAlign: 'center', marginBottom: '2.2rem' }}>
-        <span class="section-subtitle"><i class="fa-solid fa-route"></i> Academic Roadmap</span>
+        <span className="section-subtitle"><i className="fa-solid fa-route"></i> Academic Roadmap</span>
         <h3 style={{ fontSize: '1.85rem', marginTop: '0.4rem', color: 'var(--color-peach)' }}>
           Curved Milestone Pathway
         </h3>
@@ -151,10 +151,10 @@ export default function EducationTimeline() {
       </div>
 
       {/* Horizontal Scrollable Track Container */}
-      <div class="timeline-scroll-track">
-        <div class="curved-timeline-canvas-scroll">
+      <div className="timeline-scroll-track">
+        <div className="curved-timeline-canvas-scroll">
           {/* Continuous Winding SVG Vector Road Track */}
-          <svg class="timeline-svg-road-scroll" viewBox="0 0 1750 480" preserveAspectRatio="none">
+          <svg className="timeline-svg-road-scroll" viewBox="0 0 1750 480" preserveAspectRatio="none">
             <defs>
               <linearGradient id="roadGradLine" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.85" />
@@ -202,31 +202,31 @@ export default function EducationTimeline() {
           </svg>
 
           {/* Staggered Milestone Cards Layer */}
-          <div class="cards-scroll-layer">
+          <div className="cards-scroll-layer">
             {steps.map((step, idx) => {
               const isTop = idx % 2 === 0;
               return (
                 <div
                   key={step.num}
-                  class={`scroll-block-card ${isTop ? 'scroll-align-top' : 'scroll-align-bottom'} ${step.isActive ? 'block-active' : ''}`}
+                  className={`scroll-block-card ${isTop ? 'scroll-align-top' : 'scroll-align-bottom'} ${step.isActive ? 'block-active' : ''}`}
                   onMouseEnter={() => setSelectedMilestone(step)}
                   onClick={() => setSelectedMilestone(step)}
                 >
                   {/* Badge Number */}
-                  <div class="scroll-num-tag" style={{ background: step.color }}>
+                  <div className="scroll-num-tag" style={{ background: step.color }}>
                     {step.num}
                   </div>
 
-                  <div class="scroll-card-header">
-                    <span class="scroll-period">{step.period}</span>
-                    <span class="scroll-type" style={{ color: step.color }}>{step.type}</span>
+                  <div className="scroll-card-header">
+                    <span className="scroll-period">{step.period}</span>
+                    <span className="scroll-type" style={{ color: step.color }}>{step.type}</span>
                   </div>
 
-                  <h4 class="scroll-title">{step.title}</h4>
-                  <div class="scroll-stat-badge">{step.stats}</div>
+                  <h4 className="scroll-title">{step.title}</h4>
+                  <div className="scroll-stat-badge">{step.stats}</div>
 
                   {/* Concise Summary Points */}
-                  <ul class="scroll-short-list">
+                  <ul className="scroll-short-list">
                     {step.shortPoints.slice(0, 2).map((pt, pIdx) => (
                       <li key={pIdx}>{pt}</li>
                     ))}
@@ -234,13 +234,13 @@ export default function EducationTimeline() {
 
                   {/* Short Project Tag */}
                   {step.projectTitle && (
-                    <div class="scroll-project-tag">
-                      <i class="fa-solid fa-folder-open"></i> {step.projectTitle}
+                    <div className="scroll-project-tag">
+                      <i className="fa-solid fa-folder-open"></i> {step.projectTitle}
                     </div>
                   )}
 
-                  <div class="scroll-hover-hint">
-                    <i class="fa-solid fa-expand"></i> Click for Details
+                  <div className="scroll-hover-hint">
+                    <i className="fa-solid fa-expand"></i> Click for Details
                   </div>
                 </div>
               );
@@ -251,33 +251,33 @@ export default function EducationTimeline() {
 
       {/* ==================== EXPANDED DETAIL MODAL / BIG CARD ==================== */}
       {selectedMilestone && (
-        <div class="big-card-backdrop" onClick={() => setSelectedMilestone(null)}>
-          <div class="big-card-modal" onClick={e => e.stopPropagation()}>
-            <button class="big-card-close" onClick={() => setSelectedMilestone(null)}>
-              <i class="fa-solid fa-xmark"></i>
+        <div className="big-card-backdrop" onClick={() => setSelectedMilestone(null)}>
+          <div className="big-card-modal" onClick={e => e.stopPropagation()}>
+            <button className="big-card-close" onClick={() => setSelectedMilestone(null)}>
+              <i className="fa-solid fa-xmark"></i>
             </button>
 
-            <div class="big-card-header" style={{ borderLeft: `6px solid ${selectedMilestone.color}` }}>
-              <div class="big-card-num" style={{ background: selectedMilestone.color }}>
+            <div className="big-card-header" style={{ borderLeft: `6px solid ${selectedMilestone.color}` }}>
+              <div className="big-card-num" style={{ background: selectedMilestone.color }}>
                 {selectedMilestone.num}
               </div>
               <div>
-                <span class="big-card-period">{selectedMilestone.period} • {selectedMilestone.type}</span>
-                <h3 class="big-card-title">{selectedMilestone.title}</h3>
-                <p class="big-card-institution">{selectedMilestone.institution}</p>
+                <span className="big-card-period">{selectedMilestone.period} • {selectedMilestone.type}</span>
+                <h3 className="big-card-title">{selectedMilestone.title}</h3>
+                <p className="big-card-institution">{selectedMilestone.institution}</p>
               </div>
             </div>
 
-            <div class="big-card-body">
+            <div className="big-card-body">
               {/* Highlight Stats Pill */}
-              <div class="big-card-stat-pill">
-                <i class="fa-solid fa-award"></i> {selectedMilestone.stats} ({selectedMilestone.grade})
+              <div className="big-card-stat-pill">
+                <i className="fa-solid fa-award"></i> {selectedMilestone.stats} ({selectedMilestone.grade})
               </div>
 
               {/* Full Points List */}
               <div style={{ marginBottom: '1.2rem' }}>
                 <h4 style={{ fontSize: '0.98rem', color: 'var(--color-espresso)', marginBottom: '0.6rem' }}>
-                  <i class="fa-solid fa-list-check"></i> Coursework & Performance Highlights:
+                  <i className="fa-solid fa-list-check"></i> Coursework & Performance Highlights:
                 </h4>
                 <ul style={{ paddingLeft: '1.2rem', color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: '1.6' }}>
                   {selectedMilestone.shortPoints.map((pt, pIdx) => (
@@ -288,9 +288,9 @@ export default function EducationTimeline() {
 
               {/* Full Project Feature Box */}
               {selectedMilestone.projectTitle && (
-                <div class="big-card-project">
+                <div className="big-card-project">
                   <h4 style={{ fontSize: '1.05rem', color: 'var(--color-espresso)', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <i class="fa-solid fa-laptop-code"></i> {selectedMilestone.projectTitle}
+                    <i className="fa-solid fa-laptop-code"></i> {selectedMilestone.projectTitle}
                   </h4>
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.8rem' }}>
                     {selectedMilestone.projectDesc}
@@ -298,7 +298,7 @@ export default function EducationTimeline() {
 
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
                     {selectedMilestone.tech.map((t, tIdx) => (
-                      <span key={tIdx} class="tech-badge">{t}</span>
+                      <span key={tIdx} className="tech-badge">{t}</span>
                     ))}
                   </div>
                 </div>
@@ -306,13 +306,13 @@ export default function EducationTimeline() {
             </div>
 
             {/* Modal Actions */}
-            <div class="big-card-footer">
+            <div className="big-card-footer">
               {selectedMilestone.marksheetId && (
-                <a href="#marksheets" class="btn btn-primary btn-sm" onClick={() => setSelectedMilestone(null)}>
-                  <i class="fa-solid fa-file-invoice"></i> View Verified Marksheet
+                <a href="#marksheets" className="btn btn-primary btn-sm" onClick={() => setSelectedMilestone(null)}>
+                  <i className="fa-solid fa-file-invoice"></i> View Verified Marksheet
                 </a>
               )}
-              <button class="btn btn-outline btn-sm" onClick={() => setSelectedMilestone(null)}>
+              <button className="btn btn-outline btn-sm" onClick={() => setSelectedMilestone(null)}>
                 Close
               </button>
             </div>
