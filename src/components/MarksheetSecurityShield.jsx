@@ -85,26 +85,8 @@ export default function MarksheetSecurityShield({ children, title = "Official Ac
       }
     };
 
-    // 4. Window Focus / Blur & Visibility Change Handlers (Detect OBS / Snipping Tool Focus Steal)
-    const handleWindowBlur = () => {
-      setIsFocusLost(true);
-    };
-
-    const handleWindowFocus = () => {
-      // Keep isFocusLost available to be cleared manually or after user clicks restore
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        setIsFocusLost(true);
-      }
-    };
-
     window.addEventListener('keydown', handleKeyDown, true);
     window.addEventListener('keyup', handleKeyUp, true);
-    window.addEventListener('blur', handleWindowBlur);
-    window.addEventListener('focus', handleWindowFocus);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     // 5. DOM Mutation Observer (Anti-Tamper for Watermark overlay)
     let observer = null;
