@@ -234,22 +234,7 @@ app.get('/api/projects', (req, res) => {
       techStack: ['JavaScript', 'Machine Learning', 'HTML5', 'CSS3'],
       githubUrl: 'https://github.com/zeelpatel028/AgroVision_AI'
     },
-    {
-      id: 2,
-      title: 'AI AgroVision Engine',
-      repoName: 'AI_AgroVision',
-      type: 'Python Data Science & ML',
-      status: 'Active',
-      description: 'Python machine learning backend engine driving data processing pipelines, predictive modeling algorithms, and feature engineering for agriculture datasets.',
-      features: [
-        'Data analysis pipelines built with Pandas and NumPy',
-        'Predictive crop classification algorithm',
-        'Data preprocessing & feature scaling matrix',
-        'Model training and evaluation scripts'
-      ],
-      techStack: ['Python', 'Pandas', 'NumPy', 'Scikit-Learn'],
-      githubUrl: 'https://github.com/zeelpatel028/AI_AgroVision'
-    },
+
     {
       id: 3,
       title: 'Tripzza Tours Platform',
