@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import MarksheetSecurityShield from './MarksheetSecurityShield';
-import SecurityShieldAnimation from './SecurityShieldAnimation';
+import { defaultMarksheets } from '../data/defaultData';
 
 export default function MarksheetGallery({ marksheetsData, onOpenLightbox }) {
   const [activeTab, setActiveTab] = useState('10th');
-  const [isScreenshotHidden, setIsScreenshotHidden] = useState(false);
-  const [securityNotice, setSecurityNotice] = useState('');
 
   const tabs = [
     { key: '10th', label: '10th Board (SSC)', icon: 'fa-certificate' },
@@ -19,40 +17,8 @@ export default function MarksheetGallery({ marksheetsData, onOpenLightbox }) {
   ];
 
   const isUpcoming = activeTab.startsWith('sem-upcoming');
-  const activeData = marksheetsData ? marksheetsData[activeTab] : null;
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      const key = e.key ? e.key.toLowerCase() : '';
-      const code = e.code ? e.code.toLowerCase() : '';
-
-      const isPrtScn = e.key === 'PrintScreen' || code === 'printscreen' || e.keyCode === 44;
-      const isWinShiftS = (e.metaKey || e.key === 'Meta' || e.key === 'OS') && e.shiftKey && (key === 's' || code === 'keys');
-      const isMacScreenshot = e.metaKey && e.shiftKey && (key === '3' || key === '4' || key === '5');
-      const isCtrlP = (e.ctrlKey || e.metaKey) && (key === 'p');
-      const isCtrlS = (e.ctrlKey || e.metaKey) && (key === 's');
-      const isF12 = e.key === 'F12' || (e.metaKey && e.altKey && key === 'i');
-
-      if (isPrtScn || isWinShiftS || isMacScreenshot || isCtrlP || isCtrlS || isF12) {
-        setIsScreenshotHidden(true);
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText('🔒 Protected Academic Document (Zeel Dobariya) - Screenshots & Recording Restricted').catch(() => {});
-        }
-        setSecurityNotice('📷 Screenshot / Screen Capture Key Detected: Marksheet obscured for document protection.');
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown, true);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown, true);
-    };
-  }, []);
-
-  const handleRestoreView = (e) => {
-    e.stopPropagation();
-    setIsScreenshotHidden(false);
-    setSecurityNotice('');
-  };
+  const mergedData = marksheetsData || defaultMarksheets;
+  const activeData = mergedData ? mergedData[activeTab] || defaultMarksheets[activeTab] : defaultMarksheets[activeTab];
 
   return (
     <div className="marksheets-container">
@@ -73,13 +39,6 @@ export default function MarksheetGallery({ marksheetsData, onOpenLightbox }) {
       </div>
 
       <MarksheetSecurityShield title={activeData ? activeData.title : 'Academic Marksheet'}>
-        {securityNotice && (
-          <div className="security-alert-banner animate-fade-in" style={{ margin: '0.5rem 0' }}>
-            <i className="fa-solid fa-shield-halved"></i>
-            <span>{securityNotice}</span>
-          </div>
-        )}
-
         <div className="marksheet-card-display">
           {isUpcoming || !activeData ? (
             <div className="marksheet-placeholder">
@@ -96,84 +55,31 @@ export default function MarksheetGallery({ marksheetsData, onOpenLightbox }) {
             <>
               <div
                 className="marksheet-preview-area cyber-scanline-container hover-lift-3d"
-                onClick={() => {
-                  if (!isScreenshotHidden) {
-                    onOpenLightbox(activeData.image, activeData.title);
-                  }
-                }}
-                onContextMenu={(e) => e.preventDefault()}
-                onDragStart={(e) => e.preventDefault()}
-                style={{ position: 'relative', overflow: 'hidden' }}
+                onClick={() => onOpenLightbox(activeData.image, activeData.title)}
+                title="Click to view full screen high-resolution image"
+                style={{ position: 'relative', overflow: 'hidden', cursor: 'pointer' }}
               >
-                {!isScreenshotHidden ? (
-                  <>
-                    <img
-                      src={activeData.image}
-                      alt={activeData.title}
-                      draggable="false"
-                      onContextMenu={(e) => e.preventDefault()}
-                      style={{
-                        userSelect: 'none',
-                        WebkitUserSelect: 'none',
-                        display: 'block',
-                        width: '100%',
-                        height: 'auto'
-                      }}
-                    />
-                    <div className="zoom-overlay">
-                      <i className="fa-solid fa-magnifying-glass-plus"></i>
-                      <span>Click to view original mark sheet</span>
-                    </div>
-                  </>
-                ) : (
-                  <div
-                    className="marksheet-screenshot-hide-overlay"
-                    style={{
-                      padding: '2.5rem 1.5rem',
-                      textAlign: 'center',
-                      background: 'rgba(18, 13, 10, 0.96)',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      minHeight: '320px',
-                      border: '1px solid var(--border-active)'
-                    }}
-                  >
-                    {/* Animated SVG Cyber Security Shield */}
-                    <SecurityShieldAnimation size={120} />
-
-                    <h4 style={{ fontSize: '1.3rem', color: 'var(--color-peach)', marginBottom: '0.4rem' }}>
-                      Marksheet Hidden for Security
-                    </h4>
-                    <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', maxWidth: '380px', marginBottom: '1.4rem' }}>
-                      Screenshot key detected. The marksheet image is hidden to protect document privacy.
-                    </p>
-
-                    <button
-                      onClick={handleRestoreView}
-                      style={{
-                        padding: '0.65rem 1.6rem',
-                        background: 'linear-gradient(135deg, var(--color-peach) 0%, var(--color-taupe) 100%)',
-                        color: '#120d0a',
-                        border: 'none',
-                        borderRadius: '9999px',
-                        fontWeight: '700',
-                        fontSize: '0.9rem',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.6rem',
-                        boxShadow: '0 8px 20px rgba(0,0,0,0.3)',
-                        transition: 'transform 0.2s ease'
-                      }}
-                    >
-                      <i className="fa-solid fa-rotate-left"></i>
-                      Restore Marksheet View
-                    </button>
-                  </div>
-                )}
+                <img
+                  src={activeData.image}
+                  alt={activeData.title}
+                  draggable="false"
+                  onError={(e) => {
+                    console.error("Image load error for", activeData.image);
+                  }}
+                  style={{
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    display: 'block',
+                    width: '100%',
+                    maxHeight: '480px',
+                    objectFit: 'contain',
+                    borderRadius: '8px'
+                  }}
+                />
+                <div className="zoom-overlay">
+                  <i className="fa-solid fa-magnifying-glass-plus"></i>
+                  <span>Click to view original mark sheet</span>
+                </div>
               </div>
 
               <div className="marksheet-details-area">
@@ -218,8 +124,16 @@ export default function MarksheetGallery({ marksheetsData, onOpenLightbox }) {
                   </div>
                 </div>
 
-                <div style={{ fontSize: '0.85rem', color: 'var(--color-taupe)', borderTop: '1px dashed var(--border-light)', paddingTop: '0.8rem', marginTop: '1rem' }}>
-                  <i className="fa-solid fa-circle-info" style={{ color: 'var(--color-peach)' }}></i> {activeData.notes}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', borderTop: '1px dashed var(--border-light)', paddingTop: '0.8rem', marginTop: '1rem' }}>
+                  <div style={{ fontSize: '0.85rem', color: 'var(--color-taupe)' }}>
+                    <i className="fa-solid fa-circle-info" style={{ color: 'var(--color-peach)' }}></i> {activeData.notes}
+                  </div>
+                  <button
+                    className="btn btn-outline btn-sm"
+                    onClick={() => onOpenLightbox(activeData.image, activeData.title)}
+                  >
+                    <i className="fa-solid fa-expand"></i> View High-Res Image
+                  </button>
                 </div>
               </div>
             </>
