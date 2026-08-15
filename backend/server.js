@@ -490,6 +490,12 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Zeel Dobariya Portfolio Express Backend running on http://localhost:${PORT}`);
-});
+module.exports = app;
+
+if (require.main === module || (!process.env.VERCEL && process.env.NODE_ENV !== 'production')) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Zeel Dobariya Portfolio Express Backend running on http://localhost:${PORT}`);
+  });
+}
+
+
