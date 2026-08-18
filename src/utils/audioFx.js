@@ -144,3 +144,32 @@ export const playModalOpenSound = () => {
     osc.stop(now + 0.12);
   } catch (e) {}
 };
+
+// High-Tech Cyber Scanner Transition Sound
+export const playScannerSound = () => {
+  if (!soundEnabled) return;
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
+    
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(450, now);
+    osc.frequency.exponentialRampToValueAtTime(1600, now + 0.35);
+    osc.frequency.exponentialRampToValueAtTime(800, now + 0.7);
+    
+    gain.gain.setValueAtTime(0.035, now);
+    gain.gain.linearRampToValueAtTime(0.045, now + 0.35);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.75);
+    
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    osc.start();
+    osc.stop(now + 0.75);
+  } catch (e) {}
+};
+

@@ -823,37 +823,228 @@ button {
 
 .hero-avatar-wrapper {
   position: relative;
-  width: min(300px, 68vw);
-  height: min(300px, 68vw);
+  width: min(320px, 75vw);
+  height: min(380px, 90vw);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle, rgba(255, 219, 187, 0.15) 0%, rgba(15, 10, 7, 0.9) 70%);
+  background: radial-gradient(circle, rgba(255, 219, 187, 0.12) 0%, rgba(15, 10, 7, 0.95) 75%);
   border: 2px solid var(--border-cyber);
   clip-path: polygon(
-    16px 0,
-    calc(100% - 16px) 0,
-    100% 16px,
-    100% calc(100% - 16px),
-    calc(100% - 16px) 100%,
-    16px 100%,
-    0 calc(100% - 16px),
-    0 16px
+    18px 0,
+    calc(100% - 18px) 0,
+    100% 18px,
+    100% calc(100% - 18px),
+    calc(100% - 18px) 100%,
+    18px 100%,
+    0 calc(100% - 18px),
+    0 18px
   );
-  box-shadow: var(--shadow-glow-strong), inset 0 0 30px rgba(255, 219, 187, 0.1);
-  padding: 1rem;
+  box-shadow: var(--shadow-glow-strong), inset 0 0 35px rgba(255, 219, 187, 0.12);
+  padding: 0.85rem;
   box-sizing: border-box;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.hero-avatar-wrapper:hover {
+  border-color: var(--color-peach);
+  box-shadow: 0 0 35px rgba(255, 219, 187, 0.45);
+  transform: translateY(-4px);
 }
 
 .hero-avatar-inner {
+  position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
+  background: #0d0907;
+}
+
+.hero-avatar-portrait {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.hero-avatar-portrait.active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 2;
+}
+
+.avatar-vignette {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 45%;
+  background: linear-gradient(to top, rgba(7, 5, 3, 0.9) 0%, transparent 100%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.avatar-mode-pill {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(18, 12, 8, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-cyber);
+  padding: 0.25rem 0.75rem;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+  font-family: var(--font-hud);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-peach);
+  letter-spacing: 1px;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  transition: all var(--transition-fast);
+}
+
+.avatar-mode-dot {
+  width: 6px;
+  height: 6px;
+  min-width: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: beaconPulse 1.5s infinite;
+}
+
+.avatar-mode-tag {
+  font-size: 0.65rem;
+  color: var(--color-taupe);
+  background: rgba(255, 219, 187, 0.12);
+  padding: 0.1rem 0.35rem;
+  border-radius: 2px;
+}
+
+.avatar-mode-dot.scanning {
+  background: #facc15;
+  box-shadow: 0 0 10px #facc15;
+  animation: none;
+}
+
+/* Holographic Laser Scanner Transition Overlay */
+.laser-scanner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.laser-scanner-overlay.sweep {
+  opacity: 1;
+}
+
+.laser-beam-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #ffffff;
+  box-shadow: 0 0 15px #ffffff, 0 0 30px var(--color-peach), 0 0 50px var(--color-peach);
+  opacity: 0;
+  z-index: 12;
+}
+
+.laser-scanner-overlay.sweep .laser-beam-line {
+  opacity: 1;
+  animation: laserBeamSweep 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes laserBeamSweep {
+  0% {
+    top: -5%;
+    opacity: 1;
+  }
+  50% {
+    top: 50%;
+    opacity: 1;
+    height: 5px;
+  }
+  100% {
+    top: 105%;
+    opacity: 0;
+  }
+}
+
+.laser-grid-mesh {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(255, 219, 187, 0.12) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255, 219, 187, 0.12) 1px, transparent 1px);
+  background-size: 18px 18px;
+  opacity: 0;
+  z-index: 11;
+}
+
+.laser-scanner-overlay.sweep .laser-grid-mesh {
+  animation: gridMeshFade 1s ease forwards;
+}
+
+@keyframes gridMeshFade {
+  0% { opacity: 0; }
+  25% { opacity: 0.7; }
+  75% { opacity: 0.7; }
+  100% { opacity: 0; }
+}
+
+.scanner-status-text {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-tech);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--color-peach);
+  letter-spacing: 1.5px;
+  background: rgba(7, 5, 3, 0.88);
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--border-cyber);
+  clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px));
+  opacity: 0;
+  white-space: nowrap;
+  z-index: 13;
+  box-shadow: 0 0 15px rgba(255, 219, 187, 0.25);
+}
+
+.laser-scanner-overlay.sweep .scanner-status-text {
+  animation: statusTextBlink 1s ease forwards;
+}
+
+@keyframes statusTextBlink {
+  0% { opacity: 0; transform: translateX(-50%) translateY(-5px); }
+  20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-5px); }
+}
+
+.hero-avatar-wrapper.scanning-active {
+  border-color: var(--color-peach);
+  box-shadow: 0 0 45px rgba(255, 219, 187, 0.65), inset 0 0 35px rgba(255, 219, 187, 0.25);
 }
 
 .hero-avatar-wrapper::after {
@@ -867,23 +1058,7 @@ button {
   box-shadow: 0 0 15px var(--color-peach);
   animation: laserScan 3.5s ease-in-out infinite alternate;
   pointer-events: none;
-}
-
-@keyframes laserScan {
-  0% { top: 5%; opacity: 0.8; }
-  100% { top: 95%; opacity: 0.8; }
-}
-
-.hero-avatar-img {
-  width: 88%;
-  height: 88%;
-  object-fit: contain;
-  filter: drop-shadow(0 0 15px rgba(255, 219, 187, 0.4));
-  transition: transform var(--transition-normal);
-}
-
-.hero-avatar-wrapper:hover .hero-avatar-img {
-  transform: scale(1.04);
+  z-index: 4;
 }
 
 /* Badges Wrapper */
@@ -907,20 +1082,20 @@ button {
   padding: 0.7rem 1rem;
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
   box-shadow: var(--shadow-hud);
-  z-index: 4;
+  z-index: 6;
   pointer-events: auto;
   box-sizing: border-box;
 }
 
 .floating-badge-1 {
-  top: 5%;
-  left: -8%;
+  top: 25px;
+  left: -28px;
   animation: floatAnim1 4.5s ease-in-out infinite alternate;
 }
 
 .floating-badge-2 {
-  bottom: 5%;
-  right: -8%;
+  bottom: 25px;
+  right: -28px;
   animation: floatAnim2 5s ease-in-out infinite alternate;
 }
 

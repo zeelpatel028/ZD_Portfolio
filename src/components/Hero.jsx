@@ -1,8 +1,54 @@
-import React from 'react';
-import { playHoverSound, playClickSound } from '../utils/audioFx';
+import React, { useState, useEffect, useRef } from 'react';
+import { playHoverSound, playClickSound, playScannerSound } from '../utils/audioFx';
 
 export default function Hero({ profile, semData }) {
   const currentSem = semData?.currentSemester || 4;
+
+  const heroImages = [
+    {
+      src: '/ZD_Photo.png',
+      alt: 'Zeel Dobariya Real Profile',
+      mode: 'REAL PROFILE',
+      tag: 'OFFICIAL'
+    },
+    {
+      src: '/ZD_Chereter.png',
+      alt: 'Zeel Dobariya Cyber Character',
+      mode: 'CYBER AVATAR',
+      tag: 'ESPORTS'
+    }
+  ];
+
+  const [activeImgIndex, setActiveImgIndex] = useState(0);
+  const [isScanning, setIsScanning] = useState(false);
+
+  const triggerScanTransition = () => {
+    setIsScanning(true);
+    playScannerSound();
+
+    // Switch image midway through the scanner sweep
+    setTimeout(() => {
+      setActiveImgIndex(prev => (prev === 0 ? 1 : 0));
+    }, 450);
+
+    // End scan animation
+    setTimeout(() => {
+      setIsScanning(false);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      triggerScanTransition();
+    }, 5000); // Continuous 5-second interval
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleImageClick = () => {
+    playClickSound();
+    triggerScanTransition();
+  };
 
   return (
     <section className="hero" id="hero">
@@ -79,15 +125,41 @@ export default function Hero({ profile, semData }) {
           </div>
         </div>
 
-        {/* Character Avatar Card & Holographic HUD Frame */}
+        {/* Character Avatar Card & Holographic HUD Frame with Laser Scanner Transition */}
         <div className="hero-card">
-          <div className="hero-avatar-wrapper" onMouseEnter={playHoverSound}>
+          <div
+            className={`hero-avatar-wrapper ${isScanning ? 'scanning-active' : ''}`}
+            onMouseEnter={playHoverSound}
+            onClick={handleImageClick}
+            title="Click to trigger laser scan & switch avatar (Auto-scans every 5s)"
+          >
             <div className="hero-avatar-inner">
-              <img
-                src={profile?.logoUrl || '/ZD.png'}
-                alt="Zeel Dobariya Avatar Logo"
-                className="hero-avatar-img"
-              />
+              {heroImages.map((img, idx) => (
+                <img
+                  key={img.src}
+                  src={img.src}
+                  alt={img.alt}
+                  className={`hero-avatar-portrait ${activeImgIndex === idx ? 'active' : ''}`}
+                />
+              ))}
+
+              {/* Holographic Laser Scanner Sweep Overlay */}
+              <div className={`laser-scanner-overlay ${isScanning ? 'sweep' : ''}`} aria-hidden="true">
+                <div className="laser-beam-line"></div>
+                <div className="laser-grid-mesh"></div>
+                <div className="scanner-status-text">
+                  <i className="fa-solid fa-barcode"></i> SCANNING // RECONFIGURING
+                </div>
+              </div>
+
+              <div className="avatar-vignette"></div>
+            </div>
+
+            {/* Mode Indicator Pill */}
+            <div className="avatar-mode-pill">
+              <span className={`avatar-mode-dot ${isScanning ? 'scanning' : ''}`}></span>
+              <span>{heroImages[activeImgIndex].mode}</span>
+              <span className="avatar-mode-tag">{isScanning ? 'SCAN' : '5s AUTO'}</span>
             </div>
           </div>
 
