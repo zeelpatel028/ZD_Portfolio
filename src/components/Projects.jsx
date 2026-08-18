@@ -1,4 +1,5 @@
 import React from 'react';
+import { playHoverSound, playClickSound } from '../utils/audioFx';
 
 export default function Projects({ projectsData }) {
   if (!projectsData) return null;
@@ -8,23 +9,27 @@ export default function Projects({ projectsData }) {
       <div className="container">
         <div className="section-header">
           <span className="section-subtitle">
-            <i className="fa-brands fa-github"></i> Public Repositories (github.com/zeelpatel028)
+            <i className="fa-brands fa-github"></i> Mission Log // Deployed Builds
           </span>
-          <h2 className="section-title gradient-text-anim">Innovative Software & AI/ML Projects</h2>
+          <h2 className="section-title gradient-text-anim">Missions & Tactical Builds</h2>
           <p className="section-description">
-            A comprehensive showcase of my public GitHub projects, ranging from AI & Machine Learning models to full-stack web applications and core Java data structures.
+            A battle-tested deployment log of public GitHub operations ranging from AI/ML recommendation engines to full-stack transactional platforms and core Java data structures.
           </p>
         </div>
 
         <div className="projects-grid">
-          {projectsData.map(proj => (
-            <div key={proj.id} className="project-card hover-lift-3d">
+          {projectsData.map((proj, idx) => (
+            <div
+              key={proj.id}
+              className="project-card"
+              onMouseEnter={playHoverSound}
+            >
               <div className="project-body">
                 <div className="project-header">
                   <span className={`project-status ${proj.status === 'Completed' ? 'status-completed' : 'status-in-progress'}`}>
-                    {proj.status}
+                    {proj.status === 'Completed' ? 'MISSION CLEARED' : 'ACTIVE MISSION'}
                   </span>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--color-espresso)', fontWeight: '800' }}>
+                  <span style={{ fontSize: '0.82rem', color: 'var(--color-taupe)', fontWeight: '700', fontFamily: 'var(--font-hud)' }}>
                     <i className="fa-solid fa-code-commit"></i> {proj.repoName || 'GitHub Repo'}
                   </span>
                 </div>
@@ -35,10 +40,10 @@ export default function Projects({ projectsData }) {
                 
                 <p className="project-desc">{proj.description}</p>
 
-                {/* Key Features List */}
+                {/* Key Capabilities */}
                 <div style={{ marginBottom: '1.2rem' }}>
-                  <h4 style={{ fontSize: '0.86rem', color: 'var(--color-espresso)', marginBottom: '0.5rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    Key Capabilities & Architecture:
+                  <h4 style={{ fontSize: '0.86rem', color: 'var(--color-peach)', marginBottom: '0.5rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    Tactical Architecture & Specs:
                   </h4>
                   <ul className="project-features">
                     {proj.features.map((feat, fIdx) => (
@@ -47,30 +52,34 @@ export default function Projects({ projectsData }) {
                   </ul>
                 </div>
 
-                {/* Tech Stack Badges */}
-                <div className="project-tech" style={{ marginBottom: '1.5rem' }}>
+                {/* Tech Stack Equipment */}
+                <div className="project-tech" style={{ marginBottom: '1.5rem', marginTop: 'auto' }}>
                   {proj.techStack.map((tech, tIdx) => (
                     <span key={tIdx} className="tech-badge">{tech}</span>
                   ))}
                 </div>
 
-                {/* GitHub Repository Link Button */}
-                <div style={{ display: 'flex', gap: '0.8rem', marginTop: 'auto', paddingTop: '1.1rem', borderTop: '1px solid var(--border-light)' }}>
+                {/* Launch Links */}
+                <div style={{ display: 'flex', gap: '0.8rem', paddingTop: '1.1rem', borderTop: '1px solid var(--border-subtle)' }}>
                   <a
                     href={proj.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-primary btn-sm hover-lift-3d"
+                    className="btn btn-primary btn-sm"
                     style={{ flex: 1, textDecoration: 'none' }}
+                    onMouseEnter={playHoverSound}
+                    onClick={playClickSound}
                   >
-                    <i className="fa-brands fa-github"></i> View GitHub Repo
+                    <i className="fa-brands fa-github"></i> Deploy Repo
                   </a>
                   <a
                     href={proj.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-outline btn-sm hover-lift-3d"
+                    className="btn btn-outline btn-sm"
                     style={{ textDecoration: 'none' }}
+                    onMouseEnter={playHoverSound}
+                    onClick={playClickSound}
                   >
                     <i className="fa-solid fa-arrow-up-right-from-square"></i> Open
                   </a>

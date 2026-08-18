@@ -9,6 +9,7 @@ import Certifications from './components/Certifications';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import LightboxModal from './components/LightboxModal';
+import CyberBackground from './components/CyberBackground';
 import {
   defaultProfile,
   defaultSemData,
@@ -68,6 +69,7 @@ export default function App() {
 
   return (
     <div className="app-root">
+      <CyberBackground />
       <Navbar profile={profile} theme={theme} onToggleTheme={toggleTheme} />
       <Hero profile={profile} semData={semData} />
       <About semData={semData} />

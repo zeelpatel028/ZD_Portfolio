@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { playHoverSound, playClickSound, playLevelUpSound } from '../utils/audioFx';
 
 export default function Contact({ profile, onShowToast }) {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -6,13 +7,15 @@ export default function Contact({ profile, onShowToast }) {
   const [loading, setLoading] = useState(false);
 
   const handleCopy = (text) => {
+    playClickSound();
     navigator.clipboard.writeText(text).then(() => {
-      onShowToast(`Copied "${text}" to clipboard!`);
+      onShowToast(`[COPIED TELEMETRY]: ${text}`);
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    playClickSound();
     setLoading(true);
     setStatusMsg('');
 
@@ -24,110 +27,143 @@ export default function Contact({ profile, onShowToast }) {
       });
       const data = await res.json();
       if (data.success) {
-        setStatusMsg(data.message);
+        playLevelUpSound();
+        setStatusMsg('[TRANSMISSION SENT]: Message delivered successfully!');
         setFormData({ name: '', email: '', message: '' });
       } else {
-        setStatusMsg(data.error || 'Failed to submit.');
+        setStatusMsg(data.error || '[ERROR]: Transmission failed.');
       }
     } catch (err) {
-      setStatusMsg('Error submitting form. Please try again.');
+      setStatusMsg('[ERROR]: Signal interrupted. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <section className="section" id="contact" style={{ background: 'rgba(18, 13, 10, 0.4)' }}>
+    <section className="section" id="contact" style={{ background: 'var(--bg-section-alt)' }}>
       <div className="container">
         <div className="section-header">
-          <span className="section-subtitle">Get In Touch</span>
-          <h2 className="section-title gradient-text-anim">Let's Connect & Collaborate</h2>
+          <span className="section-subtitle">
+            <i className="fa-solid fa-satellite-dish"></i> Transmission Frequency // Secure Comms
+          </span>
+          <h2 className="section-title gradient-text-anim">Open Comms Channel</h2>
           <p className="section-description">
-            Open for ML Engineering internships, backend development roles, and technical collaborations.
+            Available for ML Engineering roles, Backend Python development missions, and high-impact software collaborations.
           </p>
         </div>
 
         <div className="contact-grid">
-          <div className="contact-info-card hover-lift-3d">
-            <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: 'var(--color-peach)' }}>Contact Information</h3>
+          <div className="contact-info-card" onMouseEnter={playHoverSound}>
+            <h3 style={{ fontSize: '1.4rem', marginBottom: '1.5rem', color: 'var(--color-peach)' }}>
+              <i className="fa-solid fa-tower-broadcast"></i> Secure Telemetry Direct
+            </h3>
 
-            <div className="contact-item">
+            <div className="contact-item" onMouseEnter={playHoverSound}>
               <div className="contact-icon"><i className="fa-solid fa-envelope"></i></div>
               <div className="contact-detail">
-                <div className="label">Email Address</div>
+                <div className="label">Comms Address (Email)</div>
                 <div className="val">{profile?.email || 'zeelptl028@gmail.com'}</div>
               </div>
-              <button className="copy-btn hover-lift-3d" onClick={() => handleCopy(profile?.email || 'zeelptl028@gmail.com')} title="Copy Email">
+              <button
+                className="copy-btn"
+                onClick={() => handleCopy(profile?.email || 'zeelptl028@gmail.com')}
+                title="Copy Email Telemetry"
+                onMouseEnter={playHoverSound}
+              >
                 <i className="fa-solid fa-copy"></i>
               </button>
             </div>
 
-            <div className="contact-item">
-              <div className="contact-icon"><i className="fa-solid fa-phone"></i></div>
+            <div className="contact-item" onMouseEnter={playHoverSound}>
+              <div className="contact-icon"><i className="fa-brands fa-linkedin-in"></i></div>
               <div className="contact-detail">
-                <div className="label">Phone Number</div>
-                <div className="val">{profile?.phone || '+91-6353807407'}</div>
+                <div className="label">LinkedIn Frequency</div>
+                <div className="val">
+                  <a
+                    href={profile?.linkedin || 'https://www.linkedin.com/in/zeel-dobariya-a8a0b9369/'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'inherit', textDecoration: 'none' }}
+                  >
+                    linkedin.com/in/zeel-dobariya
+                  </a>
+                </div>
               </div>
-              <button className="copy-btn hover-lift-3d" onClick={() => handleCopy(profile?.phone || '+91-6353807407')} title="Copy Phone">
+              <button
+                className="copy-btn"
+                onClick={() => handleCopy(profile?.linkedin || 'https://www.linkedin.com/in/zeel-dobariya-a8a0b9369/')}
+                title="Copy LinkedIn Telemetry"
+                onMouseEnter={playHoverSound}
+              >
                 <i className="fa-solid fa-copy"></i>
               </button>
             </div>
 
-            <div className="contact-item">
-              <div className="contact-icon"><i className="fa-solid fa-location-dot"></i></div>
+            <div className="contact-item" onMouseEnter={playHoverSound}>
+              <div className="contact-icon"><i className="fa-solid fa-location-crosshairs"></i></div>
               <div className="contact-detail">
-                <div className="label">Location</div>
+                <div className="label">Base of Operations</div>
                 <div className="val">{profile?.location || 'Ahmedabad, Gujarat, India'}</div>
               </div>
             </div>
           </div>
 
-          <div className="contact-info-card hover-lift-3d">
-            <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--color-peach)' }}>Send a Direct Message</h3>
+          <div className="contact-info-card" onMouseEnter={playHoverSound}>
+            <h3 style={{ fontSize: '1.4rem', marginBottom: '1.2rem', color: 'var(--color-peach)' }}>
+              <i className="fa-solid fa-terminal"></i> Transmit Packet
+            </h3>
             
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label className="form-label">Your Name</label>
+                <label className="form-label">Operative Codename / Name</label>
                 <input
                   type="text"
                   className="form-input"
                   required
-                  placeholder="Enter your name"
+                  placeholder="Enter your name / callsign..."
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 />
               </div>
 
               <div className="form-group">
-                <label className="form-label">Your Email</label>
+                <label className="form-label">Return Frequency (Email)</label>
                 <input
                   type="email"
                   className="form-input"
                   required
-                  placeholder="Enter your email"
+                  placeholder="Enter return email address..."
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
               </div>
 
               <div className="form-group">
-                <label className="form-label">Message</label>
+                <label className="form-label">Encrypted Message Payload</label>
                 <textarea
                   className="form-textarea"
                   rows="4"
                   required
-                  placeholder="Your message..."
+                  placeholder="Type your transmission payload here..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 ></textarea>
               </div>
 
-              <button type="submit" className="btn btn-primary" disabled={loading}>
-                <i className="fa-solid fa-paper-plane"></i> {loading ? 'Sending...' : 'Send Message'}
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={loading}
+                onMouseEnter={playHoverSound}
+              >
+                <i className="fa-solid fa-paper-plane"></i> {loading ? 'Transmitting...' : 'Send Transmission'}
               </button>
 
               {statusMsg && (
-                <p style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--color-peach)' }}>{statusMsg}</p>
+                <p style={{ marginTop: '1rem', fontSize: '0.92rem', color: 'var(--color-peach)', fontFamily: 'var(--font-hud)', fontWeight: 700 }}>
+                  {statusMsg}
+                </p>
               )}
             </form>
           </div>

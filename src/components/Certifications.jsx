@@ -1,4 +1,5 @@
 import React from 'react';
+import { playHoverSound } from '../utils/audioFx';
 
 export default function Certifications({ certsData }) {
   if (!certsData) return null;
@@ -7,16 +8,22 @@ export default function Certifications({ certsData }) {
     <section className="section" id="certifications">
       <div className="container">
         <div className="section-header">
-          <span className="section-subtitle">Accomplishments</span>
-          <h2 className="section-title gradient-text-anim">Certifications & Competitions</h2>
+          <span className="section-subtitle">
+            <i className="fa-solid fa-trophy"></i> Trophy Room // Achievements Unlocked
+          </span>
+          <h2 className="section-title gradient-text-anim">Trophies & Honors</h2>
           <p className="section-description">
-            Recognitions and credentials earned in machine learning, data science, and competitive hackathons.
+            Prestigious credentials and honors earned in high-intensity competitive hackathons and advanced Data Science pipelines.
           </p>
         </div>
 
         <div className="cert-grid">
           {certsData.map(c => (
-            <div key={c.id} className="cert-card hover-lift-3d">
+            <div
+              key={c.id}
+              className="cert-card"
+              onMouseEnter={playHoverSound}
+            >
               <div className="cert-icon"><i className={`fa-solid ${c.icon}`}></i></div>
               <div className="cert-info">
                 <h4>{c.title}</h4>

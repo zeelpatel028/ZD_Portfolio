@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { playHoverSound, playClickSound, playLevelUpSound, playModalOpenSound } from '../utils/audioFx';
 
 export default function EducationTimeline() {
   const [selectedMilestone, setSelectedMilestone] = useState(null);
@@ -7,27 +8,27 @@ export default function EducationTimeline() {
     {
       num: '01',
       period: '2021 – 2022',
-      title: '10th Standard (SSC)',
+      title: 'Stage 01: SSC Board Recon',
       institution: 'GSHSEB Board, Gandhinagar',
       stats: '426 / 600 • 80.53 PR',
-      grade: 'B1 Grade (Qualified)',
+      grade: 'B1 Grade (Rank Cleared)',
       shortPoints: [
-        'Board Marks: 426 / 600 (80.53 PR)',
-        'Computer Practical: Grade A1',
-        'Sanskrit: 80/100 (B1) | Science: 74/100 (B1)'
+        'Board Score: 426 / 600 (80.53 PR)',
+        'Computer Practical: Grade A1 (Max)',
+        'Sanskrit: 80/100 | Science: 74/100'
       ],
       projectTitle: null,
-      type: 'School',
+      type: 'School Quest',
       color: '#3b82f6',
       marksheetId: '10th'
     },
     {
       num: '02',
       period: '2023 – 2024',
-      title: '12th Science (HSC)',
+      title: 'Stage 02: 12th Science Stream',
       institution: 'GSHSEB Science Stream (Group A)',
-      stats: '466 / 650 • 81.62 Science PR',
-      grade: 'B1 Overall Grade',
+      stats: '466 / 650 • 81.62 PR',
+      grade: 'B1 Overall (Rank Cleared)',
       shortPoints: [
         'Mathematics: 92 / 100 (Grade A1)',
         'Chemistry: 85 / 100 (Grade A2)',
@@ -42,16 +43,16 @@ export default function EducationTimeline() {
     {
       num: '03',
       period: 'Sep 2024 – Feb 2025',
-      title: 'Semester I',
+      title: 'Stage 03: Semester I',
       institution: 'LJ University, Ahmedabad',
       stats: '7.13 SPI (Distinction)',
       grade: 'First Class with Distinction',
       shortPoints: [
         'Mathematics-I: Grade A+',
         'MOOC: Intro to Java (LearnQuest)',
-        'IOT & Computer Workshops: Grade A++'
+        'IOT & Hardware Labs: Grade A++'
       ],
-      projectTitle: 'Hospital Management System',
+      projectTitle: 'Boss: Hospital Management System',
       projectDesc: 'Core Java application for managing patient admissions, doctor appointment scheduling, room allocation & automated billing.',
       tech: ['Java', 'OOP', 'File I/O'],
       type: 'Sem 1',
@@ -61,7 +62,7 @@ export default function EducationTimeline() {
     {
       num: '04',
       period: 'Mar 2025 – Aug 2025',
-      title: 'Semester II',
+      title: 'Stage 04: Semester II',
       institution: 'LJ University, Ahmedabad',
       stats: '6.37 SPI (First Class)',
       grade: 'First Class',
@@ -70,7 +71,7 @@ export default function EducationTimeline() {
         'Database Management System: Grade B+',
         'MOOC: Java Data Structures (Penn)'
       ],
-      projectTitle: 'Bharatiya Janta Mart',
+      projectTitle: 'Boss: Bharatiya Janta Mart',
       projectDesc: 'Java console e-commerce app integrated with MySQL via JDBC. Double Linked List + Stack cart system, OTP login & PAN validation.',
       tech: ['Java', 'JDBC', 'MySQL', 'Data Structures'],
       type: 'Sem 2',
@@ -80,17 +81,17 @@ export default function EducationTimeline() {
     {
       num: '05',
       period: 'Sep 2025 – Feb 2026',
-      title: 'Semester III',
+      title: 'Stage 05: Semester III',
       institution: 'LJ University, Ahmedabad',
       stats: '8.17 SPI (Distinction)',
-      grade: 'First Class with Distinction',
+      grade: 'First Class with Distinction (Peak SPI)',
       shortPoints: [
         'Digital Electronics: Grade A++',
         'Full Stack Development JS-1: Grade A+',
         'Fundamentals of CS using Python: Grade O',
         'MOOC: HTML, CSS & JS (IBM)'
       ],
-      projectTitle: 'Tripzza Tours',
+      projectTitle: 'Boss: Tripzza Tours Platform',
       projectDesc: 'Full-stack Tour booking platform featuring booking workflow, payment analytics dashboard, PostgreSQL DB & automated PDF ticket engine.',
       tech: ['React.js', 'Express.js', 'PostgreSQL', 'PDF Engine'],
       type: 'Sem 3',
@@ -100,16 +101,16 @@ export default function EducationTimeline() {
     {
       num: '06',
       period: 'Mar 2026 – Aug 2026',
-      title: 'Semester IV (Active)',
+      title: 'Stage 06: Semester IV (Active)',
       institution: 'LJ University, Ahmedabad',
-      stats: 'Active Semester IV',
-      grade: 'In Progress',
+      stats: 'Active Stage IV',
+      grade: 'In Combat // Active Quest',
       shortPoints: [
         'Supervised Machine Learning Algorithms',
         'Data Science Pipelines (Pandas & NumPy)',
         'Cloud APIs & Backend Python Integrations'
       ],
-      projectTitle: 'AgroVision',
+      projectTitle: 'Raid: AgroVision AI Platform',
       projectDesc: 'AI-powered smart agriculture platform with supervised ML crop recommendation models based on weather, soil nutrients, and live commodity prices.',
       tech: ['Python', 'Machine Learning', 'Pandas', 'NumPy'],
       type: 'Sem 4',
@@ -120,10 +121,10 @@ export default function EducationTimeline() {
     {
       num: '07',
       period: 'Sep 2026 – Jun 2028',
-      title: 'Semesters V – VIII',
+      title: 'Stage 07: Semesters V – VIII',
       institution: 'LJ University, Ahmedabad',
       stats: 'B.Tech Roadmap',
-      grade: 'Upcoming Specialization',
+      grade: 'Upcoming Specialization Missions',
       shortPoints: [
         'Deep Learning & Neural Networks',
         'Natural Language Processing (NLP)',
@@ -137,16 +138,28 @@ export default function EducationTimeline() {
     }
   ];
 
+  const handleOpenMilestone = (step) => {
+    playModalOpenSound();
+    setSelectedMilestone(step);
+  };
+
+  const handleCloseMilestone = () => {
+    playClickSound();
+    setSelectedMilestone(null);
+  };
+
   return (
     <div className="svg-timeline-wrapper">
-      {/* Timeline Section Header */}
-      <div style={{ textAlign: 'center', marginBottom: '2.2rem' }}>
-        <span className="section-subtitle"><i className="fa-solid fa-route"></i> Academic Roadmap</span>
-        <h3 style={{ fontSize: '1.85rem', marginTop: '0.4rem', color: 'var(--color-peach)' }}>
-          Curved Milestone Pathway
+      {/* Timeline Section Sub-Header */}
+      <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+        <span className="section-subtitle">
+          <i className="fa-solid fa-route"></i> Campaign Quest Pathway
+        </span>
+        <h3 style={{ fontSize: '1.9rem', marginTop: '0.4rem', color: 'var(--color-peach)' }}>
+          Academic Campaign Roadmap
         </h3>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginTop: '0.3rem' }}>
-          ↔ Scroll horizontally to explore all milestones • Click any block to view full details
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.98rem', marginTop: '0.3rem', fontFamily: 'var(--font-hud)' }}>
+          ↔ Scroll horizontally to explore all campaign stages • Click any card for Hologram Telemetry
         </p>
       </div>
 
@@ -165,13 +178,13 @@ export default function EducationTimeline() {
                 <stop offset="100%" stopColor="#22c55e" stopOpacity="0.95" />
               </linearGradient>
 
-              <filter id="nodeGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="5" result="blur" />
+              <filter id="nodeGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="6" result="blur" />
                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
               </filter>
             </defs>
 
-            {/* Winding Road Outer Stroke */}
+            {/* Winding Laser Outer Stroke */}
             <path
               d="M 60,240 C 180,80 300,80 420,240 C 540,400 660,400 780,240 C 900,80 1020,80 1140,240 C 1260,400 1380,400 1500,240 C 1600,100 1680,100 1710,240"
               fill="none"
@@ -180,7 +193,7 @@ export default function EducationTimeline() {
               strokeLinecap="round"
             />
 
-            {/* Dashed Center Road Line */}
+            {/* Dashed Center Laser Pulse Line */}
             <path
               d="M 60,240 C 180,80 300,80 420,240 C 540,400 660,400 780,240 C 900,80 1020,80 1140,240 C 1260,400 1380,400 1500,240 C 1600,100 1680,100 1710,240"
               fill="none"
@@ -209,8 +222,8 @@ export default function EducationTimeline() {
                 <div
                   key={step.num}
                   className={`scroll-block-card ${isTop ? 'scroll-align-top' : 'scroll-align-bottom'} ${step.isActive ? 'block-active' : ''}`}
-                  onMouseEnter={() => setSelectedMilestone(step)}
-                  onClick={() => setSelectedMilestone(step)}
+                  onMouseEnter={playHoverSound}
+                  onClick={() => handleOpenMilestone(step)}
                 >
                   {/* Badge Number */}
                   <div className="scroll-num-tag" style={{ background: step.color }}>
@@ -232,15 +245,15 @@ export default function EducationTimeline() {
                     ))}
                   </ul>
 
-                  {/* Short Project Tag */}
+                  {/* Boss Project Tag */}
                   {step.projectTitle && (
                     <div className="scroll-project-tag">
-                      <i className="fa-solid fa-folder-open"></i> {step.projectTitle}
+                      <i className="fa-solid fa-skull"></i> {step.projectTitle}
                     </div>
                   )}
 
                   <div className="scroll-hover-hint">
-                    <i className="fa-solid fa-expand"></i> Click for Details
+                    <i className="fa-solid fa-expand"></i> Inspect Holo
                   </div>
                 </div>
               );
@@ -249,11 +262,11 @@ export default function EducationTimeline() {
         </div>
       </div>
 
-      {/* ==================== EXPANDED DETAIL MODAL / BIG CARD ==================== */}
+      {/* ==================== EXPANDED HOLOGRAM DETAIL MODAL ==================== */}
       {selectedMilestone && (
-        <div className="big-card-backdrop" onClick={() => setSelectedMilestone(null)}>
+        <div className="big-card-backdrop" onClick={handleCloseMilestone}>
           <div className="big-card-modal" onClick={e => e.stopPropagation()}>
-            <button className="big-card-close" onClick={() => setSelectedMilestone(null)}>
+            <button className="big-card-close" onClick={handleCloseMilestone}>
               <i className="fa-solid fa-xmark"></i>
             </button>
 
@@ -274,29 +287,29 @@ export default function EducationTimeline() {
                 <i className="fa-solid fa-award"></i> {selectedMilestone.stats} ({selectedMilestone.grade})
               </div>
 
-              {/* Full Points List */}
-              <div style={{ marginBottom: '1.2rem' }}>
-                <h4 style={{ fontSize: '0.98rem', color: 'var(--color-espresso)', marginBottom: '0.6rem' }}>
-                  <i className="fa-solid fa-list-check"></i> Coursework & Performance Highlights:
+              {/* Coursework List */}
+              <div style={{ marginBottom: '1.4rem' }}>
+                <h4 style={{ fontSize: '1rem', color: 'var(--color-peach)', marginBottom: '0.6rem' }}>
+                  <i className="fa-solid fa-list-check"></i> Missions & Performance Telemetry:
                 </h4>
-                <ul style={{ paddingLeft: '1.2rem', color: 'var(--text-muted)', fontSize: '0.92rem', lineHeight: '1.6' }}>
+                <ul style={{ paddingLeft: '1.2rem', color: 'var(--text-muted)', fontSize: '0.96rem', lineHeight: '1.6' }}>
                   {selectedMilestone.shortPoints.map((pt, pIdx) => (
                     <li key={pIdx} style={{ marginBottom: '0.35rem' }}>{pt}</li>
                   ))}
                 </ul>
               </div>
 
-              {/* Full Project Feature Box */}
+              {/* Boss Project Feature Box */}
               {selectedMilestone.projectTitle && (
                 <div className="big-card-project">
-                  <h4 style={{ fontSize: '1.05rem', color: 'var(--color-espresso)', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <h4 style={{ fontSize: '1.1rem', color: 'var(--color-peach)', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <i className="fa-solid fa-laptop-code"></i> {selectedMilestone.projectTitle}
                   </h4>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.8rem' }}>
+                  <p style={{ fontSize: '0.94rem', color: 'var(--text-muted)', marginBottom: '0.8rem' }}>
                     {selectedMilestone.projectDesc}
                   </p>
 
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
                     {selectedMilestone.tech.map((t, tIdx) => (
                       <span key={tIdx} className="tech-badge">{t}</span>
                     ))}
@@ -307,8 +320,8 @@ export default function EducationTimeline() {
 
             {/* Modal Actions */}
             <div className="big-card-footer">
-              <button className="btn btn-outline btn-sm" onClick={() => setSelectedMilestone(null)}>
-                Close
+              <button className="btn btn-outline btn-sm" onClick={handleCloseMilestone}>
+                Close Holo
               </button>
             </div>
           </div>

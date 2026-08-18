@@ -3,7 +3,6 @@ export const defaultProfile = {
   title: 'Aspiring ML Engineer | Data Scientist | Backend Python Developer',
   location: 'Ahmedabad, Gujarat, India',
   email: 'zeelptl028@gmail.com',
-  phone: '+91-6353807407',
   github: 'https://github.com/zeelpatel028',
   linkedin: 'https://www.linkedin.com/in/zeel-dobariya-a8a0b9369/',
   summary: 'Aspiring ML Engineer, Data Scientist and Backend Python Developer. Builds intelligent models, analyzes datasets, and creates scalable backend apps.',
@@ -134,49 +133,45 @@ export const defaultProjects = [
 export const defaultSkills = [
   {
     category: 'Programming Languages',
-    icon: 'fa-code',
-    categoryBanner: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/python/python-original.svg',
+    icon: 'fa-solid fa-code',
     skills: [
-      { name: 'Python', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/python/python-original.svg' },
-      { name: 'JavaScript', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/javascript/javascript-original.svg' },
-      { name: 'Java', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/java/java-original.svg' },
-      { name: 'SQL', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/azuresqldatabase/azuresqldatabase-original.svg' }
+      { name: 'Python', icon: 'devicon-python-plain colored' },
+      { name: 'JavaScript', icon: 'devicon-javascript-plain colored' },
+      { name: 'Java', icon: 'devicon-java-plain colored' },
+      { name: 'SQL', icon: 'devicon-azuresqldatabase-plain colored' }
     ]
   },
   {
     category: 'Machine Learning & Data',
-    icon: 'fa-brain',
-    categoryBanner: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/pandas/pandas-original.svg',
+    icon: 'fa-solid fa-brain',
     skills: [
-      { name: 'Pandas', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/pandas/pandas-original.svg' },
-      { name: 'NumPy', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/numpy/numpy-original.svg' },
-      { name: 'Supervised Learning', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/tensorflow/tensorflow-original.svg' },
-      { name: 'Data Preprocessing', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/python/python-plain.svg' },
-      { name: 'Model Evaluation', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/jupyter/jupyter-original.svg' }
+      { name: 'Pandas', icon: 'devicon-pandas-plain colored' },
+      { name: 'NumPy', icon: 'devicon-numpy-plain colored' },
+      { name: 'Supervised Learning', icon: 'fa-solid fa-brain' },
+      { name: 'Data Preprocessing', icon: 'fa-solid fa-filter' },
+      { name: 'Model Evaluation', icon: 'fa-solid fa-chart-pie' }
     ]
   },
   {
     category: 'Web & Backend Development',
-    icon: 'fa-globe',
-    categoryBanner: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/react/react-original.svg',
+    icon: 'fa-solid fa-layer-group',
     skills: [
-      { name: 'React.js', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/react/react-original.svg' },
-      { name: 'Express.js', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/express/express-original.svg' },
-      { name: 'Django', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/django/django-plain.svg' },
-      { name: 'RESTful APIs', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/nodejs/nodejs-original.svg' },
-      { name: 'JDBC', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/java/java-plain.svg' }
+      { name: 'React.js', icon: 'devicon-react-original colored' },
+      { name: 'Express.js', icon: 'devicon-express-original' },
+      { name: 'Django', icon: 'devicon-django-plain colored' },
+      { name: 'RESTful APIs', icon: 'fa-solid fa-network-wired' },
+      { name: 'JDBC', icon: 'fa-solid fa-plug-circle-bolt' }
     ]
   },
   {
     category: 'Tools & Databases',
-    icon: 'fa-wrench',
-    categoryBanner: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/postgresql/postgresql-original.svg',
+    icon: 'fa-solid fa-screwdriver-wrench',
     skills: [
-      { name: 'VS Code', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/vscode/vscode-original.svg' },
-      { name: 'Jupyter Notebook', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/jupyter/jupyter-original.svg' },
-      { name: 'Git & GitHub', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/git/git-original.svg' },
-      { name: 'MySQL', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/mysql/mysql-original.svg' },
-      { name: 'PostgreSQL', iconUrl: 'https://cdn.jsdelivr.net/gh/devicon/devicon/icons/postgresql/postgresql-original.svg' }
+      { name: 'VS Code', icon: 'devicon-vscode-plain colored' },
+      { name: 'Jupyter Notebook', icon: 'devicon-jupyter-plain colored' },
+      { name: 'Git & GitHub', icon: 'devicon-git-plain colored' },
+      { name: 'MySQL', icon: 'devicon-mysql-plain colored' },
+      { name: 'PostgreSQL', icon: 'devicon-postgresql-plain colored' }
     ]
   }
 ];
