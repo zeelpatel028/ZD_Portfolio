@@ -83,9 +83,10 @@ export default function Skills({ skillsData }) {
         {/* Section Header */}
         <div className="section-header">
           <span className="section-subtitle">
-            <i className="fa-solid fa-crosshairs"></i> Tech Arsenal & Loadout Tree
+            <i className="fa-solid fa-code"></i> Tech Loadout // Skills
           </span>
-          <h2 className="section-title gradient-text-anim">Arsenal & Skill Tree</h2>
+          <h2 className="section-title gradient-text-anim">Skills & Technical Arsenal</h2>
+          <div className="section-header-divider"></div>
           <p className="section-description">
             Combat-ready technical masteries across algorithmic programming, machine learning frameworks, scalable backend servers, and developer tooling.
           </p>

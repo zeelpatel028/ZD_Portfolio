@@ -3,6 +3,22 @@
 
 let audioCtx = null;
 let soundEnabled = true;
+let userInteracted = false;
+
+// Unlock AudioContext on first user gesture (click, keydown, touch)
+if (typeof window !== 'undefined') {
+  const unlockAudio = () => {
+    userInteracted = true;
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume().catch(() => {});
+    }
+  };
+
+  window.addEventListener('click', unlockAudio, { passive: true });
+  window.addEventListener('keydown', unlockAudio, { passive: true });
+  window.addEventListener('touchstart', unlockAudio, { passive: true });
+  window.addEventListener('pointerdown', unlockAudio, { passive: true });
+}
 
 // Initialize sound setting from localStorage
 try {
@@ -16,15 +32,22 @@ try {
 
 function getAudioContext() {
   if (typeof window === 'undefined') return null;
+  // Prevent browser AudioContext autoplay policy warnings prior to user gesture
+  if (!userInteracted && (!audioCtx || audioCtx.state === 'suspended')) {
+    return null;
+  }
+
   if (!audioCtx) {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     if (AudioContext) {
       audioCtx = new AudioContext();
     }
   }
-  if (audioCtx && audioCtx.state === 'suspended') {
+
+  if (audioCtx && audioCtx.state === 'suspended' && userInteracted) {
     audioCtx.resume().catch(() => {});
   }
+
   return audioCtx;
 }
 
@@ -172,4 +195,3 @@ export const playScannerSound = () => {
     osc.stop(now + 0.75);
   } catch (e) {}
 };
-

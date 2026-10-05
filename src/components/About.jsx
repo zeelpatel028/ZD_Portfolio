@@ -8,9 +8,10 @@ export default function About({ semData }) {
       <div className="container">
         <div className="section-header">
           <span className="section-subtitle">
-            <i className="fa-solid fa-id-card-clip"></i> Operative Dossier // Specs
+            <i className="fa-solid fa-user-astronaut"></i> Operative Dossier // About
           </span>
-          <h2 className="section-title gradient-text-anim">Character Lore & Specs</h2>
+          <h2 className="section-title gradient-text-anim">About Me & Background</h2>
+          <div className="section-header-divider"></div>
           <p className="section-description">
             A relentless Computer Science Engineer driven by algorithmic precision, machine learning model optimization, and scalable backend architecture.
           </p>

@@ -58,7 +58,8 @@ export default function CyberBackground() {
     }
 
     const drawGrid = () => {
-      ctx.strokeStyle = 'rgba(153, 126, 103, 0.04)';
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      ctx.strokeStyle = isLight ? 'rgba(203, 213, 225, 0.35)' : 'rgba(153, 126, 103, 0.04)';
       ctx.lineWidth = 1;
       const gridSize = 60;
       
@@ -80,6 +81,7 @@ export default function CyberBackground() {
     };
 
     const animate = () => {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
       ctx.clearRect(0, 0, width, height);
 
       // Draw subtle cyber grid
@@ -110,8 +112,8 @@ export default function CyberBackground() {
         }
 
         // Render particle (diamond or circle)
-        ctx.fillStyle = p.color;
-        ctx.shadowColor = 'rgba(255, 219, 187, 0.4)';
+        ctx.fillStyle = isLight ? (p.isDiamond ? 'rgba(217, 119, 6, 0.75)' : 'rgba(71, 85, 105, 0.6)') : p.color;
+        ctx.shadowColor = isLight ? 'rgba(217, 119, 6, 0.3)' : 'rgba(255, 219, 187, 0.4)';
         ctx.shadowBlur = 6;
 
         if (p.isDiamond) {
@@ -134,8 +136,8 @@ export default function CyberBackground() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < 130) {
-            const opacity = (1 - dist / 130) * 0.22;
-            ctx.strokeStyle = `rgba(255, 219, 187, ${opacity})`;
+            const opacity = (1 - dist / 130) * (isLight ? 0.35 : 0.22);
+            ctx.strokeStyle = isLight ? `rgba(217, 119, 6, ${opacity})` : `rgba(255, 219, 187, ${opacity})`;
             ctx.lineWidth = 0.8;
             ctx.shadowBlur = 0;
             ctx.beginPath();

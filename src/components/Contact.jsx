@@ -45,9 +45,10 @@ export default function Contact({ profile, onShowToast }) {
       <div className="container">
         <div className="section-header">
           <span className="section-subtitle">
-            <i className="fa-solid fa-satellite-dish"></i> Transmission Frequency // Secure Comms
+            <i className="fa-solid fa-satellite-dish"></i> Comm Link // Contact
           </span>
-          <h2 className="section-title gradient-text-anim">Open Comms Channel</h2>
+          <h2 className="section-title gradient-text-anim">Get In Touch & Connect</h2>
+          <div className="section-header-divider"></div>
           <p className="section-description">
             Available for ML Engineering roles, Backend Python development missions, and high-impact software collaborations.
           </p>

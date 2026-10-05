@@ -9,9 +9,10 @@ export default function Certifications({ certsData }) {
       <div className="container">
         <div className="section-header">
           <span className="section-subtitle">
-            <i className="fa-solid fa-trophy"></i> Trophy Room // Achievements Unlocked
+            <i className="fa-solid fa-trophy"></i> Trophy Room // Certifications
           </span>
-          <h2 className="section-title gradient-text-anim">Trophies & Honors</h2>
+          <h2 className="section-title gradient-text-anim">Certifications & Honors</h2>
+          <div className="section-header-divider"></div>
           <p className="section-description">
             Prestigious credentials and honors earned in high-intensity competitive hackathons and advanced Data Science pipelines.
           </p>

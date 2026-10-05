@@ -22,9 +22,11 @@ export default function Hero({ profile, semData }) {
   const [activeImgIndex, setActiveImgIndex] = useState(0);
   const [isScanning, setIsScanning] = useState(false);
 
-  const triggerScanTransition = () => {
+  const triggerScanTransition = (playSound = false) => {
     setIsScanning(true);
-    playScannerSound();
+    if (playSound) {
+      playScannerSound();
+    }
 
     // Switch image midway through the scanner sweep
     setTimeout(() => {
@@ -39,7 +41,7 @@ export default function Hero({ profile, semData }) {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      triggerScanTransition();
+      triggerScanTransition(false);
     }, 5000); // Continuous 5-second interval
 
     return () => clearInterval(timer);
@@ -47,7 +49,7 @@ export default function Hero({ profile, semData }) {
 
   const handleImageClick = () => {
     playClickSound();
-    triggerScanTransition();
+    triggerScanTransition(true);
   };
 
   return (
@@ -92,7 +94,7 @@ export default function Hero({ profile, semData }) {
               onMouseEnter={playHoverSound}
               onClick={playClickSound}
             >
-              <i className="fa-solid fa-download"></i> Loot Resume
+              <i className="fa-solid fa-download"></i> Download Resume
             </a>
             <a
               href="#contact"

@@ -9,9 +9,10 @@ export default function Projects({ projectsData }) {
       <div className="container">
         <div className="section-header">
           <span className="section-subtitle">
-            <i className="fa-brands fa-github"></i> Mission Log // Deployed Builds
+            <i className="fa-solid fa-diagram-project"></i> Mission Log // Projects
           </span>
-          <h2 className="section-title gradient-text-anim">Missions & Tactical Builds</h2>
+          <h2 className="section-title gradient-text-anim">Projects & Tactical Builds</h2>
+          <div className="section-header-divider"></div>
           <p className="section-description">
             A battle-tested deployment log of public GitHub operations ranging from AI/ML recommendation engines to full-stack transactional platforms and core Java data structures.
           </p>

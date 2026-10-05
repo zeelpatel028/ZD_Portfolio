@@ -33,12 +33,13 @@ export default function Navbar({ profile, theme, onToggleTheme }) {
   };
 
   const navLinks = [
-    { label: 'Bio', keyTag: '01', href: '#about', icon: 'fa-solid fa-user-astronaut' },
-    { label: 'Quests', keyTag: '02', href: '#education', icon: 'fa-solid fa-route' },
-    { label: 'Arsenal', keyTag: '03', href: '#skills', icon: 'fa-solid fa-crosshairs' },
-    { label: 'Missions', keyTag: '04', href: '#projects', icon: 'fa-solid fa-gamepad' },
-    { label: 'Trophies', keyTag: '05', href: '#certifications', icon: 'fa-solid fa-trophy' },
-    { label: 'Comms', keyTag: '06', href: '#contact', icon: 'fa-solid fa-satellite-dish' },
+    { label: 'HOME', href: '#hero', icon: 'fa-solid fa-house' },
+    { label: 'ABOUT', href: '#about', icon: 'fa-solid fa-user-astronaut' },
+    { label: 'EDUCATION', href: '#education', icon: 'fa-solid fa-graduation-cap' },
+    { label: 'SKILLS', href: '#skills', icon: 'fa-solid fa-code' },
+    { label: 'PROJECTS', href: '#projects', icon: 'fa-solid fa-diagram-project' },
+    { label: 'CERTIFICATIONS', href: '#certifications', icon: 'fa-solid fa-trophy' },
+    { label: 'CONTACT', href: '#contact', icon: 'fa-solid fa-envelope' },
   ];
 
   return (
@@ -77,7 +78,6 @@ export default function Navbar({ profile, theme, onToggleTheme }) {
                   onMouseEnter={playHoverSound}
                   onClick={playClickSound}
                 >
-                  <span className="hotkey-tag">[{link.keyTag}]</span>
                   <span>{link.label}</span>
                 </a>
               </li>
@@ -86,32 +86,24 @@ export default function Navbar({ profile, theme, onToggleTheme }) {
 
           {/* Header Action Buttons */}
           <div className="nav-actions">
-            {/* Audio SFX Toggle */}
+            {/* Light / Dark Mode Toggle Button with Cyber Power Bolt */}
             <button
-              className={`sfx-toggle-btn ${!sfxActive ? 'muted' : ''}`}
-              onClick={handleSfxToggle}
-              title={`Audio SFX: ${sfxActive ? 'Enabled' : 'Muted'}`}
-              aria-label="Toggle Audio Effects"
-              onMouseEnter={playHoverSound}
-            >
-              <i className={`fa-solid ${sfxActive ? 'fa-volume-high' : 'fa-volume-xmark'}`}></i>
-            </button>
-
-            {/* Light / Dark Mode Toggle Button */}
-            <button
-              className="theme-toggle-btn"
+              className={`theme-toggle-btn ${theme === 'dark' ? 'theme-dark' : 'theme-light'}`}
               onClick={() => {
                 playClickSound();
                 onToggleTheme();
               }}
-              title={`Switch to ${theme === 'dark' ? 'Tactical Light' : 'Cyber Dark'} Mode`}
+              title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
               aria-label="Toggle Theme"
               onMouseEnter={playHoverSound}
             >
-              <i className={`fa-solid ${theme === 'dark' ? 'fa-sun' : 'fa-moon'}`}></i>
+              <div className="theme-icon-wrapper">
+                <i className="fa-solid fa-bolt theme-bolt-icon"></i>
+                <span className="theme-glow-aura"></span>
+              </div>
             </button>
 
-            {/* Desktop Resume Loot Download Button */}
+            {/* Desktop Resume Download Button */}
             <a
               href={profile?.resumeUrl || '/Zeel_Dobariya_python.pdf'}
               download="Zeel_Dobariya_Resume.pdf"
@@ -119,7 +111,7 @@ export default function Navbar({ profile, theme, onToggleTheme }) {
               onMouseEnter={playHoverSound}
               onClick={playClickSound}
             >
-              <i className="fa-solid fa-file-arrow-down"></i> <span>Loot Resume</span>
+              <i className="fa-solid fa-file-arrow-down"></i> <span>RESUME</span>
             </a>
 
             {/* Hamburger Button for Mobile */}
@@ -185,7 +177,7 @@ export default function Navbar({ profile, theme, onToggleTheme }) {
                 >
                   <div className="mobile-link-left">
                     <span className="mobile-link-icon"><i className={link.icon}></i></span>
-                    <span className="mobile-link-title">[{link.keyTag}] {link.label}</span>
+                    <span className="mobile-link-title">{link.label}</span>
                   </div>
                   <i className="fa-solid fa-chevron-right mobile-link-arrow"></i>
                 </a>
@@ -205,7 +197,7 @@ export default function Navbar({ profile, theme, onToggleTheme }) {
             }}
             onMouseEnter={playHoverSound}
           >
-            <i className="fa-solid fa-file-arrow-down"></i> Download Resume Loot
+            <i className="fa-solid fa-file-arrow-down"></i> Download Resume
           </a>
 
           <div className="mobile-drawer-socials">

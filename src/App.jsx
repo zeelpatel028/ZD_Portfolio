@@ -45,11 +45,11 @@ export default function App() {
   };
 
   useEffect(() => {
-    fetch('/api/profile').then(res => res.json()).then(data => setProfile(data)).catch(() => {});
-    fetch('/api/semester-status').then(res => res.json()).then(data => setSemData(data)).catch(() => {});
-    fetch('/api/projects').then(res => res.json()).then(data => setProjects(data)).catch(() => {});
-    fetch('/api/skills').then(res => res.json()).then(data => setSkills(data)).catch(() => {});
-    fetch('/api/certifications').then(res => res.json()).then(data => setCerts(data)).catch(() => {});
+    fetch('/api/profile').then(res => res.ok ? res.json() : null).then(data => data && setProfile(data)).catch(() => {});
+    fetch('/api/semester-status').then(res => res.ok ? res.json() : null).then(data => data && setSemData(data)).catch(() => {});
+    fetch('/api/projects').then(res => res.ok ? res.json() : null).then(data => data && setProjects(data)).catch(() => {});
+    fetch('/api/skills').then(res => res.ok ? res.json() : null).then(data => data && setSkills(data)).catch(() => {});
+    fetch('/api/certifications').then(res => res.ok ? res.json() : null).then(data => data && setCerts(data)).catch(() => {});
   }, []);
 
   const openLightbox = (imageSrc, caption) => {
@@ -77,8 +77,11 @@ export default function App() {
       <section className="section" id="education" style={{ background: 'var(--bg-section-alt)' }}>
         <div className="container">
           <div className="section-header">
-            <span className="section-subtitle">Academic Record</span>
-            <h2 className="section-title">Education & Academic Journey</h2>
+            <span className="section-subtitle">
+              <i className="fa-solid fa-graduation-cap"></i> Academic Record // Education
+            </span>
+            <h2 className="section-title gradient-text-anim">Education & Academic Journey</h2>
+            <div className="section-header-divider"></div>
             <p className="section-description">
               A complete timeline of my academic journey along with main subject scores, total marks, Percentile Ranks (PR), and college SPIs.
             </p>
