@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Zeel Dobariya | Full-Stack Developer & Machine Learning Engineer Portfolio{% endblock %}</title>
+  
+  <meta name="description" content="Portfolio of Zeel Dobariya — Computer Science Engineering student at LJ University, Machine Learning Engineer, Data Scientist, and Backend Developer based in Ahmedabad, Gujarat, India.">
+  <meta name="author" content="Zeel Dobariya">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', path='images/ZD.png') }}">
+
+  <!-- Google Fonts: Gaming & Luxury Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Orbitron:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Devicon Vector Icons -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicon/devicon@latest/devicon.min.css" />
+
+  <!-- FastAPI Served Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+</head>
+<body>
+  <div class="app-root">
+    <!-- Cyber background particle canvas & scanlines -->
+    <div class="cyber-background-container" aria-hidden="true">
+      <canvas id="cyber-canvas" class="cyber-canvas"></canvas>
+      <div class="cyber-scanlines"></div>
+    </div>
+
+    <!-- COMMAND DECK HUD HEADER / NAVBAR -->
+    <header class="header">
+      <div class="container navbar">
+        <!-- Brand Logo with Player Status HUD -->
+        <a href="/#hero" class="logo-container">
+          <div class="logo-hud-frame">
+            <img src="{{ profile.logo_url }}" alt="ZD Logo" class="logo-img">
+          </div>
+          <div class="logo-text-group">
+            <span class="logo-text">ZEEL <span>DOBARIYA</span></span>
+            <span class="logo-sub-tag">
+              <span class="status-beacon"></span>
+              <span>LVL 4 CSE // READY</span>
+            </span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <ul class="nav-menu desktop-only">
+          <li><a href="/#hero" class="nav-link"><span>HOME</span></a></li>
+          <li><a href="/#about" class="nav-link"><span>ABOUT</span></a></li>
+          <li><a href="/#education" class="nav-link"><span>EDUCATION</span></a></li>
+          <li><a href="/#skills" class="nav-link"><span>SKILLS</span></a></li>
+          <li><a href="/#projects" class="nav-link"><span>PROJECTS</span></a></li>
+          <li><a href="/#certifications" class="nav-link"><span>CERTIFICATIONS</span></a></li>
+          <li><a href="/#contact" class="nav-link"><span>CONTACT</span></a></li>
+        </ul>
+
+        <!-- Header Action Buttons -->
+        <div class="nav-actions">
+          <!-- Theme Toggle Button -->
+          <button id="theme-toggle-btn" class="theme-toggle-btn" title="Toggle Theme" aria-label="Toggle Theme">
+            <div class="theme-icon-wrapper">
+              <i class="fa-solid fa-bolt theme-bolt-icon"></i>
+              <span class="theme-glow-aura"></span>
+            </div>
+          </button>
+
+          <!-- Desktop Resume Download Button -->
+          <a href="{{ profile.resume_url }}" download="Zeel_Dobariya_Resume.pdf" class="btn btn-primary btn-sm desktop-resume-btn">
+            <i class="fa-solid fa-file-arrow-down"></i> <span>RESUME</span>
+          </a>
+
+          <!-- Hamburger Button for Mobile -->
+          <button id="hamburger-btn" class="hamburger" aria-label="Toggle Mobile Navigation Menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Drawer Backdrop Overlay -->
+    <div id="mobile-backdrop" class="mobile-backdrop"></div>
+
+    <!-- Mobile Slide-out Gaming HUD Drawer -->
+    <div id="mobile-drawer" class="mobile-drawer">
+      <div class="drawer-header">
+        <div class="drawer-logo">
+          <img src="{{ profile.logo_url }}" alt="ZD Logo" class="logo-img-sm">
+          <span>OPERATIVE // ZEEL</span>
+        </div>
+        <button id="drawer-close-btn" class="drawer-close-btn" aria-label="Close Menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="drawer-body">
+        <div class="drawer-section-label">MISSION NAVIGATION</div>
+        <ul class="mobile-nav-list">
+          <li>
+            <a href="/#hero" class="mobile-nav-link">
+              <div class="mobile-link-left">
+                <span class="mobile-link-icon"><i class="fa-solid fa-house"></i></span>
+                <span class="mobile-link-title">HOME</span>
+              </div>
+              <i class="fa-solid fa-chevron-right mobile-link-arrow"></i>
+            </a>
+          </li>
+          <li>
+            <a href="/#about" class="mobile-nav-link">
+              <div class="mobile-link-left">
+                <span class="mobile-link-icon"><i class="fa-solid fa-user-astronaut"></i></span>
+                <span class="mobile-link-title">ABOUT</span>
+              </div>
+              <i class="fa-solid fa-chevron-right mobile-link-arrow"></i>
+            </a>
+          </li>
+          <li>
+            <a href="/#education" class="mobile-nav-link">
+              <div class="mobile-link-left">
+                <span class="mobile-link-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+                <span class="mobile-link-title">EDUCATION</span>
+              </div>
+              <i class="fa-solid fa-chevron-right mobile-link-arrow"></i>
+            </a>
+          </li>
+          <li>
+            <a href="/#skills" class="mobile-nav-link">
+              <div class="mobile-link-left">
+                <span class="mobile-link-icon"><i class="fa-solid fa-code"></i></span>
+                <span class="mobile-link-title">SKILLS</span>
+              </div>
+              <i class="fa-solid fa-chevron-right mobile-link-arrow"></i>
+            </a>
+          </li>
+          <li>
+            <a href="/#projects" class="mobile-nav-link">
+              <div class="mobile-link-left">
+                <span class="mobile-link-icon"><i class="fa-solid fa-diagram-project"></i></span>
+                <span class="mobile-link-title">PROJECTS</span>
+              </div>
+              <i class="fa-solid fa-chevron-right mobile-link-arrow"></i>
+            </a>
+          </li>
+          <li>
+            <a href="/#certifications" class="mobile-nav-link">
+              <div class="mobile-link-left">
+                <span class="mobile-link-icon"><i class="fa-solid fa-trophy"></i></span>
+                <span class="mobile-link-title">CERTIFICATIONS</span>
+              </div>
+              <i class="fa-solid fa-chevron-right mobile-link-arrow"></i>
+            </a>
+          </li>
+          <li>
+            <a href="/#contact" class="mobile-nav-link">
+              <div class="mobile-link-left">
+                <span class="mobile-link-icon"><i class="fa-solid fa-envelope"></i></span>
+                <span class="mobile-link-title">CONTACT</span>
+              </div>
+              <i class="fa-solid fa-chevron-right mobile-link-arrow"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="drawer-footer">
+        <a href="{{ profile.resume_url }}" download="Zeel_Dobariya_Resume.pdf" class="btn btn-primary w-full">
+          <i class="fa-solid fa-file-arrow-down"></i> Download Resume
+        </a>
+
+        <div class="mobile-drawer-socials">
+          <a href="{{ profile.github }}" target="_blank" rel="noreferrer" title="GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a href="{{ profile.linkedin }}" target="_blank" rel="noreferrer" title="LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+          <a href="mailto:{{ profile.email }}" title="Email">
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT INJECTION BLOCK -->
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container footer-content">
+        <a href="/#hero" class="logo-container">
+          <div class="logo-hud-frame">
+            <img src="{{ profile.logo_url }}" alt="ZD Logo" class="logo-img">
+          </div>
+          <div class="logo-text-group">
+            <span class="logo-text">ZEEL <span>DOBARIYA</span></span>
+            <span class="logo-sub-tag">SYSTEM ONLINE // COMBAT READY</span>
+          </div>
+        </a>
+
+        <p style="color: var(--color-taupe); max-width: 520px; font-size: 0.98rem; font-family: var(--font-hud);">
+          Computer Science Engineering Operative • Machine Learning Architect & Backend Python Developer
+        </p>
+
+        <div class="footer-socials">
+          <a href="{{ profile.github }}" target="_blank" rel="noopener noreferrer" class="social-link" title="GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a href="{{ profile.linkedin }}" target="_blank" rel="noopener noreferrer" class="social-link" title="LinkedIn">
+            <i class="fa-brands fa-linkedin-in"></i>
+          </a>
+          <a href="mailto:{{ profile.email }}" class="social-link" title="Email">
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+        </div>
+
+        <div class="copyright">
+          <span>&copy; 2026 ZEEL DOBARIYA. SYSTEM POWERED BY FASTAPI & JINJA2.</span>
+          <button id="back-to-top-btn" class="btn-back-to-top" title="Scroll to Top">
+            <i class="fa-solid fa-arrow-up"></i> Top // Return
+          </button>
+        </div>
+      </div>
+    </footer>
+
+    <!-- HOLOGRAM DETAIL MODAL FOR EDUCATION MILESTONES -->
+    <div id="big-card-backdrop" class="big-card-backdrop" style="display: none;">
+      <div class="big-card-modal">
+        <button id="big-card-close" class="big-card-close" title="Close Holo">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div id="modal-header-container" class="big-card-header">
+          <div id="modal-step-num" class="big-card-num">01</div>
+          <div>
+            <span id="modal-step-period" class="big-card-period"></span>
+            <h3 id="modal-step-title" class="big-card-title"></h3>
+            <p id="modal-step-institution" class="big-card-institution"></p>
+          </div>
+        </div>
+
+        <div class="big-card-body">
+          <div id="modal-step-stats" class="big-card-stat-pill"></div>
+
+          <div style="margin-bottom: 1.4rem;">
+            <h4 style="font-size: 1rem; color: var(--color-peach); margin-bottom: 0.6rem;">
+              <i class="fa-solid fa-list-check"></i> Missions & Performance Telemetry:
+            </h4>
+            <ul id="modal-step-points" style="padding-left: 1.2rem; color: var(--text-muted); font-size: 0.96rem; line-height: 1.6;"></ul>
+          </div>
+
+          <div id="modal-step-project-box" class="big-card-project" style="display: none;">
+            <h4 id="modal-step-project-title" style="font-size: 1.1rem; color: var(--color-peach); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem;"></h4>
+            <p id="modal-step-project-desc" style="font-size: 0.94rem; color: var(--text-muted); margin-bottom: 0.8rem;"></p>
+            <div id="modal-step-project-tech" style="display: flex; flex-wrap: wrap; gap: 0.45rem;"></div>
+          </div>
+        </div>
+
+        <div class="big-card-footer">
+          <button id="holo-close-btn" class="btn btn-outline btn-sm">Close Holo</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="{{ url_for('static', path='js/audioFx.js') }}"></script>
+  <script src="{{ url_for('static', path='js/script.js') }}"></script>
+</body>
+</html>

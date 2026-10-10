@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP Verification — ZD Portfolio Admin</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', path='images/ZD.png') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/admin.css') }}">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--vscode-editor-bg);
+      min-height: 100vh;
+    }
+    .otp-card {
+      background-color: var(--vscode-card-bg);
+      border: 1px solid var(--vscode-border);
+      border-radius: 8px;
+      padding: 30px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      text-align: center;
+    }
+    .otp-boxes {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .otp-digit-input {
+      width: 44px;
+      height: 52px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      font-family: var(--font-mono);
+      background-color: var(--vscode-editor-bg);
+      border: 1px solid var(--vscode-border);
+      color: var(--color-peach);
+      border-radius: 6px;
+      outline: none;
+    }
+    .otp-digit-input:focus {
+      border-color: var(--color-peach);
+      box-shadow: 0 0 0 2px rgba(255, 219, 187, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="otp-card">
+    <div style="margin-bottom: 16px;">
+      <i class="fa-solid fa-lock-open" style="font-size: 36px; color: var(--color-peach);"></i>
+    </div>
+    <h2 style="font-size: 18px; color: var(--text-bright); margin-bottom: 6px;">2-Factor OTP Verification</h2>
+    <p style="font-size: 12px; color: var(--text-muted);">
+      A 6-digit security code has been sent to your administrator email. Please enter it below.
+    </p>
+
+    {% if error %}
+      <div class="admin-alert admin-alert-error" style="margin-top: 16px; text-align: left;">
+        <i class="fa-solid fa-circle-xmark"></i> {{ error }}
+      </div>
+    {% endif %}
+
+    <form action="/admin/verify-otp" method="POST" id="otp-form">
+      <input type="hidden" name="otp_code" id="full_otp_code">
+
+      <div class="otp-boxes">
+        <input type="text" maxlength="1" class="otp-digit-input" autofocus>
+        <input type="text" maxlength="1" class="otp-digit-input">
+        <input type="text" maxlength="1" class="otp-digit-input">
+        <input type="text" maxlength="1" class="otp-digit-input">
+        <input type="text" maxlength="1" class="otp-digit-input">
+        <input type="text" maxlength="1" class="otp-digit-input">
+      </div>
+
+      <button type="submit" class="admin-btn admin-btn-primary" style="width: 100%; padding: 10px; margin-top: 10px;">
+        <i class="fa-solid fa-check-double"></i> Verify OTP & Authorize Session
+      </button>
+    </form>
+
+    <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+      <span style="color: var(--color-taupe);"><i class="fa-solid fa-stopwatch"></i> Expires in 5 minutes</span>
+      <button id="resend-btn" class="admin-btn admin-btn-secondary admin-btn-sm" type="button">
+        <i class="fa-solid fa-rotate-right"></i> Resend Code
+      </button>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', path='js/admin.js') }}"></script>
+  <script>
+    document.getElementById("resend-btn").addEventListener("click", async () => {
+      const btn = document.getElementById("resend-btn");
+      btn.disabled = true;
+      btn.innerText = "Dispatching...";
+      try {
+        const res = await fetch("/admin/resend-otp", { method: "POST" });
+        const data = await res.json();
+        if (data.success) {
+          alert("✅ " + data.message);
+        } else {
+          alert("❌ " + (data.error || "Failed to resend OTP."));
+        }
+      } catch (err) {
+        alert("❌ Error contacting server.");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "Resend Code";
+      }
+    });
+  </script>
+</body>
+</html>

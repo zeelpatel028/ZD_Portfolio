@@ -1,198 +1,240 @@
+# ⚡ Zeel Dobariya Portfolio & Admin Control Center (FastAPI + SQLite + HTML5 / CSS3 / Vanilla JS)
+
 <p align="center">
-  <img src="frontend/public/ZD.png" width="140" alt="ZD Portfolio Logo" />
+  <img src="app/static/images/ZD.png" width="140" alt="ZD Portfolio Logo" />
 </p>
 
 <h1 align="center">⚡ ZD Portfolio | Zeel Dobariya ⚡</h1>
 
 <p align="center">
-  <b>A High-Performance, Hardened Full-Stack Developer Portfolio & Academic Result Portal</b>
-</p>
-
-<p align="center">
-  <a href="https://github.com/zeelpatel028/ZD_Portfolio">
-    <img src="https://img.shields.io/github/stars/zeelpatel028/ZD_Portfolio?style=for-the-badge&logo=github&color=6366f1" alt="Stars"/>
-  </a>
-  <a href="https://github.com/zeelpatel028/ZD_Portfolio/network/members">
-    <img src="https://img.shields.io/github/forks/zeelpatel028/ZD_Portfolio?style=for-the-badge&logo=github&color=8b5cf6" alt="Forks"/>
-  </a>
-  <a href="https://github.com/zeelpatel028/ZD_Portfolio/blob/main/LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-emerald?style=for-the-badge" alt="License"/>
-  </a>
+  <b>A Lightweight, Fast, Responsive Personal Portfolio & Admin Control Center built with Python FastAPI, Jinja2 Templates, SQLAlchemy, SQLite, HTML5, Vanilla CSS3, and JavaScript</b>
 </p>
 
 ---
 
 ## 🌟 Overview
 
-**ZD Portfolio** is a feature-packed, modern full-stack web application designed for **Zeel Dobariya**. Built with React 18, Vite, Tailwind CSS, and a Node.js Express backend, it features interactive UI components, dynamic project showcases, verified credentials, and a **hardened anti-tamper security shield** for sensitive academic marksheets.
+This project is a high-performance personal portfolio website and comprehensive administrative control panel for **Zeel Dobariya** (Computer Science Engineering Student, Machine Learning Engineer, Data Scientist, and Backend Developer).
+
+### 🛠️ Architecture
+- **Backend**: Python FastAPI, SQLAlchemy ORM, Uvicorn ASGI Server, Jinja2 Templates.
+- **Database**: SQLite (`instance/portfolio.db`) with automatic table creation & initial data seeding. Configurable for PostgreSQL via `DATABASE_URL`.
+- **Public Frontend**: HTML5, Vanilla CSS3, Vanilla JavaScript, Web Audio API sound synthesis.
+- **Admin Panel**: Visual Studio Code-inspired dark/light developer dashboard with 2-Factor Email OTP authentication, Argon2id password hashing, audit logs, and complete CRUD management for all portfolio content.
 
 ---
 
-## ✨ Key Features
+## ✨ Key Admin Panel & Security Features
 
-- 🎨 **Futuristic Glassmorphism UI**: High-contrast dark theme, animated gradients, smooth scroll transitions, and micro-interactions.
-- 🔒 **Marksheet Security Shield**: Enterprise-grade client protection system including:
-  - **Anti-Screenshot & Anti-Recording Blurring**: Blurs confidential marksheets when focus is lost or capture tools are active.
-  - **DevTools Inspection Prevention**: Keybinding blocks (`F12`, `Ctrl+Shift+I`, `Ctrl+U`) and debugger loop traps.
-  - **Dynamic Watermarking**: Embeds live timestamps, viewer IP/session context across marksheets.
-  - **Context & Drag Lock**: Disables right-click menus, text selection, and image dragging.
-- 📧 **Backend Contact Service**: Express server powered by Nodemailer for real-time SMTP message dispatch with fallback validation.
-- 🎓 **Academic & Certificate Showcase**: Interactive Lightbox modal viewer for high-res semester marksheets and professional certifications.
-- ⚡ **Optimized Performance**: Lightning-fast Vite HMR build, modular component design, and zero bloat.
-
----
-
-## 🛠️ Tech Stack & Architecture
-
-### **Frontend**
-![React](https://img.shields.io/badge/React_18-61DAFB?style=flat-square&logo=react&logoColor=black)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript_ES6+-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-![Lucide Icons](https://img.shields.io/badge/Lucide_Icons-F43F5E?style=flat-square&logo=lucide&logoColor=white)
-
-### **Backend**
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)
-![Express.js](https://img.shields.io/badge/Express.js-000000?style=flat-square&logo=express&logoColor=white)
-![Nodemailer](https://img.shields.io/badge/Nodemailer-22C55E?style=flat-square&logo=node.js&logoColor=white)
+- 🖥️ **VS Code-Inspired Minimalist Admin Interface**: Designed with dark charcoal sidebar, neutral editor background, status bar telemetry, clean data tables, search filters, and confirmation modals. Zero heavy particle animations or sound effects in the admin dashboard.
+- 🔐 **Argon2id Password Hashing & 2-Factor Email OTP**:
+  - Validates credentials using Argon2id password hashing.
+  - Generates cryptographically secure 6-digit OTP using Python's `secrets` module.
+  - Dispatches OTP via SMTP TLS/SSL email.
+  - Enforces 5-minute single-use OTP expiration, rate limiting, and resend cooldowns.
+  - Stores keyed SHA-256 OTP digests (never plaintext).
+- 🍪 **Server-Side Session Security**:
+  - `AdminSession` DB records with random session tokens.
+  - `HttpOnly` and `SameSite=Lax` cookies.
+  - Automatic session expiration and one-click remote session revocation.
+- 📊 **Real Database Dashboard Telemetry**:
+  - Live counts for Projects, Skills, Certifications, Education Stages, Contact Messages, Unread Submissions.
+  - Real-time Administrator Audit Log tracking all content modifications.
+- 📝 **Complete Content CRUD Management**:
+  - **Profile (`/admin/profile`)**: Edit bio, title, contact links; preview and upload profile photos, avatar, logo, and resume PDF.
+  - **Education (`/admin/education`)**: Manage timeline stages (SSC, 12th, Sem 1–8), SPI stats, projects, and active current semester marker.
+  - **Skills (`/admin/skills`)**: Manage skills, categories, proficiency percentages, devicon/fontawesome icons, display order, and enabled toggles.
+  - **Projects (`/admin/projects`)**: Complete CRUD, slug generation, tech stack, key features list, thumbnail uploads, repo links, demo links, featured toggle, and draft/published toggles.
+  - **Certifications (`/admin/certifications`)**: Manage certifications, hackathon awards, issuing orgs, credential links, document uploads, and publication toggles.
+  - **Resume (`/admin/resume`)**: View published PDF, upload replacement resume with magic-byte signature validation (<=10MB), toggle public download availability.
+  - **Contact Messages (`/admin/messages`)**: Inbox table, search by sender/email, filter read/unread status, message detail viewer, delete confirmations.
+  - **Portfolio Settings (`/admin/settings`)**: Edit site title, description, contact email, social profile links, footer text, active semester, and feature availability.
+  - **Admin Security (`/admin/security`)**: Change master password, update admin email, view active sessions, revoke sessions, inspect failed login attempts, and full audit logs.
 
 ---
 
 ## 📁 Repository Structure
 
-```gfm
+```
 ZD/
-├── 📂 backend/                     # Express API & Mail Dispatcher
-│   ├── 📄 server.js                 # API Endpoints & SMTP Controller
-│   ├── 📄 .env.example              # Environment Configuration Template
-│   ├── 📄 package.json              # Backend Dependencies
-│   └── 📂 public/                   # Backend Assets & Media
+├── app/
+│   ├── __init__.py
+│   ├── main.py                  # FastAPI Entry, Lifespan DB Init & Router Mounts
+│   ├── database.py              # SQLAlchemy Engine, SessionLocal & Base
+│   ├── models.py                # 12 SQLAlchemy ORM Models
+│   ├── crud.py                  # Database CRUD Operations & Queries
+│   ├── init_db.py               # Auto Table Creation & Seed Initialization
+│   ├── security.py              # Argon2id Hashing, OTP & Session Security
+│   ├── email_service.py         # SMTP Email Dispatcher (OTP & Contact Alerts)
+│   ├── dependencies.py         # FastAPI Auth & CSRF Dependencies
+│   ├── file_utils.py            # Upload File Signature & Size Validation
+│   ├── data.py                  # Initial Seed Fallback Data
+│   ├── routes/
+│   │   ├── portfolio.py         # Public Pages & REST API Routes
+│   │   ├── admin_auth.py        # /admin/login, /admin/verify-otp, /admin/logout
+│   │   ├── admin_dashboard.py   # /admin/dashboard
+│   │   ├── admin_profile.py     # /admin/profile
+│   │   ├── admin_education.py   # /admin/education
+│   │   ├── admin_skills.py      # /admin/skills
+│   │   ├── admin_projects.py    # /admin/projects
+│   │   ├── admin_certifications.py # /admin/certifications
+│   │   ├── admin_resume.py      # /admin/resume
+│   │   ├── admin_messages.py    # /admin/messages
+│   │   ├── admin_settings.py    # /admin/settings
+│   │   └── admin_security.py    # /admin/security
+│   ├── templates/
+│   │   ├── base.html            # Public Base Template
+│   │   ├── index.html           # Public Home Template
+│   │   ├── projects.html        # Public Projects Page
+│   │   ├── contact.html         # Public Contact Form
+│   │   └── admin/               # 13 VS Code-Inspired Admin Templates
+│   └── static/
+│       ├── css/
+│       │   ├── style.css        # Public Sci-Fi Gaming HUD CSS
+│       │   └── admin.css        # VS Code Admin Panel CSS
+│       ├── js/
+│       │   ├── audioFx.js       # Procedural Web Audio API Engine
+│       │   ├── script.js        # Public Interactive Controller
+│       │   └── admin.js         # Admin Previews & Confirm Dialogs
+│       ├── images/              # Uploaded Photos, Avatars, Logos
+│       └── files/               # Published Resumes & Documents
 │
-├── 📂 frontend/                    # Vite + React Frontend Application
-│   ├── 📂 src/
-│   │   ├── 📂 components/           # UI Components
-│   │   │   ├── Navbar.jsx           # Sticky Responsive Header
-│   │   │   ├── Hero.jsx             # Profile Banner & CTAs
-│   │   │   ├── About.jsx            # Bio & Personal Summary
-│   │   │   ├── Skills.jsx           # Technical Skill Badges
-│   │   │   ├── Projects.jsx         # Project Gallery & Live Demo Links
-│   │   │   ├── EducationTimeline.jsx# Roadmap & Academic Credentials
-│   │   │   ├── MarksheetGallery.jsx # Semester Marksheet Viewer
-│   │   │   ├── MarksheetSecurityShield.jsx # Anti-Screenshot Protection
-│   │   │   ├── Contact.jsx          # Interactive Message Form
-│   │   │   └── Footer.jsx           # Footer & Social Links
-│   │   ├── App.jsx                  # Main Application Layout
-│   │   ├── index.css                # Custom CSS Design System
-│   │   └── main.jsx                 # Application Entry Point
-│   ├── 📄 index.html                # HTML Web Document
-│   └── 📄 vite.config.js            # Vite Configuration
-│
-├── 📄 .gitignore                    # Git Exclusion Standard
-└── 📄 README.md                     # Documentation
+├── instance/
+│   └── portfolio.db             # Persistent SQLite Database
+├── tests/
+│   └── test_admin.py            # Pytest Suite (Auth, OTP, Sessions, CRUD, Public API)
+├── create_admin.py              # CLI Admin Setup & Password Reset Tool
+├── run.py                       # Server Startup Entry Point
+├── requirements.txt             # Python Dependencies
+├── .env.example                 # Environment Configuration Template
+├── .gitignore                   # Git Exclusion Rules
+└── README.md                    # Project Documentation
 ```
 
 ---
 
-## 🛡️ Marksheet Security Shield Specifications
-
-| Protection Mechanism | Description | Action Taken |
-| :--- | :--- | :--- |
-| **DevTools Blocking** | Detects console opening & keyboard shortcuts (`F12`, `Ctrl+Shift+I/J/U`) | Prevents inspection & triggers debugger traps |
-| **Anti-Screenshot Blur** | Monitors window blur, focus loss, and print screen keys (`PrtScn`, `Meta+Shift+S`) | Immediately blurs marksheets & displays security shield modal |
-| **Context Menu Lock** | Prevents right-click context menu on sensitive document elements | Suppresses menu event & image saving |
-| **Dynamic Watermark** | Overlays live user metadata, session details, and security warnings | Rendered dynamically over documents |
-| **Content Drag Prevention** | Disables image dragging and highlighted text copy operations | Blocks drag/drop download attempts |
-
----
-
-## 🚀 Quick Start & Installation
+## 💻 Local Installation & Setup Instructions
 
 ### 1. Prerequisites
-- **Node.js**: `v18.0.0` or higher
-- **npm**: `v9.0.0` or higher
+- **Python 3.10+** (Python 3.12 recommended)
+- **pip** package manager
 
----
-
-### 2. Backend Setup
+### 2. Setup Virtual Environment & Install Dependencies
 
 ```bash
-# Navigate to the backend directory
-cd backend
+# Navigate to project root
+cd ZD
+
+# Create & activate virtual environment
+python -m venv .venv
+
+# On Windows (PowerShell):
+.\venv\Scripts\Activate.ps1
+# On Linux/macOS:
+source .venv/bin/activate
 
 # Install dependencies
-npm install
+pip install -r requirements.txt
+```
 
-# Configure environment variables
+### 3. Environment Configuration
+
+Copy `.env.example` to `.env`:
+
+```bash
 cp .env.example .env
 ```
 
-Edit your `.env` file with your SMTP email settings:
+Configure environment variables in `.env`:
+
 ```env
 PORT=5000
+HOST=0.0.0.0
+DATABASE_URL=sqlite:///./instance/portfolio.db
+SECRET_KEY=zd_portfolio_super_secret_key_2026
+ADMIN_EMAIL=zeelptl028@gmail.com
+ADMIN_PASSWORD=Admin@Zeel2026!
+
+# SMTP Configuration for 2FA OTP & Contact Form Delivery
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+EMAIL_USER=zeelptl028@gmail.com
+EMAIL_PASS=your_gmail_app_password_here
 RECIPIENT_EMAIL=zeelptl028@gmail.com
-EMAIL_SERVICE=gmail
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_gmail_app_password
 ```
 
-Start the backend server:
-```bash
-node server.js
-```
-The server will launch at `http://localhost:5000`.
+### 4. Initialize Database & Admin User
 
----
-
-### 3. Frontend Setup
+Run the CLI administrator setup script:
 
 ```bash
-# Open a new terminal and navigate to the frontend directory
-cd frontend
-
-# Install dependencies
-npm install
-
-# Start Vite development server
-npm run dev
+python create_admin.py
 ```
 
-Open `http://localhost:5173` in your browser.
+Or start the server (the database tables and default data will automatically seed on startup):
+
+```bash
+python run.py
+```
 
 ---
 
-## 📡 API Reference
+## 🚀 Running & Accessing the Application
 
-### Send Contact Message
-- **Endpoint**: `POST /api/contact`
-- **Headers**: `Content-Type: application/json`
-- **Request Body**:
-  ```json
-  {
-    "name": "John Doe",
-    "email": "john@example.com",
-    "subject": "Project Inquiry",
-    "message": "Hello Zeel, I would like to discuss a project with you."
-  }
-  ```
-- **Response** (`200 OK`):
-  ```json
-  {
-    "success": true,
-    "message": "Your message has been sent successfully!"
-  }
-  ```
+Start the FastAPI server:
+
+```bash
+python run.py
+```
+
+- **Public Portfolio**: [http://localhost:5000](http://localhost:5000)
+- **Admin Panel Login**: [http://localhost:5000/admin/login](http://localhost:5000/admin/login)
 
 ---
 
-## 👤 Author
+## 🧪 Running Automated Tests
+
+Run the Pytest test suite:
+
+```bash
+pytest
+```
+
+Output:
+```
+tests/test_admin.py ...... [100%]
+6 passed
+```
+
+---
+
+## ☁️ Deployment Instructions (Render)
+
+1. Create a **New Web Service** on [Render](https://render.com).
+2. Connect your GitHub repository (`zeelpatel028/ZD_Portfolio`).
+3. Set Environment to **Python 3**.
+4. Configure build & start commands:
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+5. Set Environment Variables in Render Dashboard:
+   - `DATABASE_URL`: `sqlite:///./instance/portfolio.db` (or attach persistent disk / PostgreSQL database)
+   - `SECRET_KEY`: strong random secret key string
+   - `ADMIN_EMAIL`: administrator email
+   - `ADMIN_PASSWORD`: administrator password
+   - `EMAIL_USER`: SMTP email
+   - `EMAIL_PASS`: Gmail App Password
+6. Deploy! Render will monitor `/health`.
+
+---
+
+## 👤 Author & Contact
 
 **Zeel Dobariya**
 - 🐙 GitHub: [@zeelpatel028](https://github.com/zeelpatel028)
+- 💼 LinkedIn: [zeel-dobariya](https://www.linkedin.com/in/zeel-dobariya-a8a0b9369/)
 - 📧 Email: [zeelptl028@gmail.com](mailto:zeelptl028@gmail.com)
-- 💼 Repository: [ZD_Portfolio](https://github.com/zeelpatel028/ZD_Portfolio)
 
 ---
-
 <p align="center">
-  <sub>Built with ❤️ by Zeel Dobariya • © 2026 All Rights Reserved</sub>
+  <sub>Built with ❤️ by Zeel Dobariya • Powered by Python FastAPI, Jinja2, & SQLAlchemy • © 2026 All Rights Reserved</sub>
 </p>

@@ -1,0 +1,87 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<div class="admin-header-row">
+  <div>
+    <h1>Resume File Management</h1>
+    <p style="font-size: 12px; color: var(--text-muted);">View, replace, or toggle public availability of your official PDF resume document</p>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+  <!-- CURRENT RESUME FILE STATUS CARD -->
+  <div class="admin-card">
+    <div class="admin-card-header">
+      <div class="admin-card-title"><i class="fa-solid fa-file-pdf"></i> Current Published Resume</div>
+    </div>
+
+    {% if profile and profile.resume_url %}
+      <div style="background-color: var(--vscode-editor-bg); border: 1px solid var(--vscode-border); border-radius: 6px; padding: 16px; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <i class="fa-solid fa-file-pdf" style="font-size: 32px; color: var(--color-peach);"></i>
+          <div>
+            <div style="font-weight: 600; color: var(--text-bright);">Zeel Dobariya Resume (PDF)</div>
+            <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">
+              Path: {{ profile.resume_url }} {% if file_size_kb > 0 %}({{ file_size_kb }} KB){% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <a href="{{ profile.resume_url }}" target="_blank" class="admin-btn admin-btn-primary">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Published PDF
+        </a>
+        <a href="{{ profile.resume_url }}" download class="admin-btn admin-btn-secondary">
+          <i class="fa-solid fa-download"></i> Test Download
+        </a>
+      </div>
+    {% else %}
+      <div class="admin-alert admin-alert-error">
+        No active resume PDF file is registered in the database.
+      </div>
+    {% endif %}
+
+    <hr style="border: none; border-top: 1px solid var(--vscode-border); margin: 20px 0;">
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <strong style="color: var(--text-bright);">Public Resume Download Button</strong>
+        <div style="font-size: 11px; color: var(--text-muted);">Toggle whether visitors can download the resume on the portfolio</div>
+      </div>
+      <form action="/admin/resume/toggle-availability" method="POST">
+        {% if resume_enabled %}
+          <button type="submit" class="admin-btn admin-btn-primary admin-btn-sm">Enabled (Active)</button>
+        {% else %}
+          <button type="submit" class="admin-btn admin-btn-secondary admin-btn-sm">Disabled (Hidden)</button>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+
+  <!-- UPLOAD REPLACEMENT CARD -->
+  <div class="admin-card">
+    <div class="admin-card-header">
+      <div class="admin-card-title"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Replacement PDF</div>
+    </div>
+
+    <form action="/admin/resume" method="POST" enctype="multipart/form-data">
+      <div class="admin-form-group">
+        <label for="resume_file">Select PDF File (Max 10MB)</label>
+        <input type="file" id="resume_file" name="resume_file" accept="application/pdf" class="admin-input" required>
+      </div>
+
+      <div style="background-color: var(--vscode-editor-bg); border-left: 3px solid var(--color-bronze); padding: 12px; font-size: 11px; color: var(--text-muted); margin-bottom: 16px;">
+        <strong style="color: var(--color-peach);"><i class="fa-solid fa-shield-halved"></i> Security Verification:</strong><br>
+        Only valid PDF files with proper <code>%PDF-</code> header signatures are accepted. Executable code or invalid documents will be rejected automatically.
+      </div>
+
+      <button type="submit" class="admin-btn admin-btn-primary" style="width: 100%; padding: 10px;">
+        <i class="fa-solid fa-upload"></i> Upload & Replace Published Resume
+      </button>
+    </form>
+  </div>
+
+</div>
+{% endblock %}

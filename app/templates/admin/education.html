@@ -1,0 +1,167 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<div class="admin-header-row">
+  <div>
+    <h1>Education & Semester Timeline</h1>
+    <p style="font-size: 12px; color: var(--text-muted);">Manage educational milestones, SPI records, projects, and active semester designation</p>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px;">
+
+  <!-- FORM CARD: ADD / EDIT -->
+  <div class="admin-card">
+    <div class="admin-card-header">
+      <div class="admin-card-title">
+        <i class="fa-solid fa-pen-to-square"></i> {{ 'Edit Entry' if editing_item else 'Add New Education Entry' }}
+      </div>
+      {% if editing_item %}
+        <a href="/admin/education" class="admin-btn admin-btn-secondary admin-btn-sm">Cancel Edit</a>
+      {% endif %}
+    </div>
+
+    <form action="/admin/education" method="POST">
+      {% if editing_item %}
+        <input type="hidden" name="ed_id" value="{{ editing_item.id }}">
+      {% endif %}
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="admin-form-group">
+          <label for="stage_num">Stage Num (e.g. 01)</label>
+          <input type="text" id="stage_num" name="stage_num" class="admin-input" value="{{ editing_item.stage_num if editing_item else '' }}" required>
+        </div>
+        <div class="admin-form-group">
+          <label for="type">Type (e.g. Sem 4, HSC)</label>
+          <input type="text" id="type" name="type" class="admin-input" value="{{ editing_item.type if editing_item else '' }}" required>
+        </div>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="title">Title (e.g. Stage 06: Semester IV)</label>
+        <input type="text" id="title" name="title" class="admin-input" value="{{ editing_item.title if editing_item else '' }}" required>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="institution">Institution</label>
+        <input type="text" id="institution" name="institution" class="admin-input" value="{{ editing_item.institution if editing_item else '' }}" required>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="admin-form-group">
+          <label for="period">Time Period</label>
+          <input type="text" id="period" name="period" class="admin-input" value="{{ editing_item.period if editing_item else '' }}" required>
+        </div>
+        <div class="admin-form-group">
+          <label for="stats">Stats / SPI</label>
+          <input type="text" id="stats" name="stats" class="admin-input" value="{{ editing_item.stats if editing_item else '' }}" required>
+        </div>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="grade">Grade / Classification</label>
+        <input type="text" id="grade" name="grade" class="admin-input" value="{{ editing_item.grade if editing_item else '' }}" required>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="short_points">Highlights (One point per line)</label>
+        <textarea id="short_points" name="short_points" class="admin-textarea" placeholder="Mathematics: Grade A+&#10;Data Structures: Grade A">{{ editing_item.short_points|join('\n') if editing_item else '' }}</textarea>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="project_title">Featured Project Title (Optional)</label>
+        <input type="text" id="project_title" name="project_title" class="admin-input" value="{{ editing_item.project_title if editing_item and editing_item.project_title else '' }}">
+      </div>
+
+      <div class="admin-form-group">
+        <label for="project_desc">Project Description (Optional)</label>
+        <textarea id="project_desc" name="project_desc" class="admin-textarea">{{ editing_item.project_desc if editing_item and editing_item.project_desc else '' }}</textarea>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="tech_stack">Project Tech Stack (Comma separated)</label>
+        <input type="text" id="tech_stack" name="tech_stack" class="admin-input" value="{{ editing_item.tech_stack|join(', ') if editing_item else '' }}">
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="admin-form-group">
+          <label for="color">Badge Color (Hex)</label>
+          <input type="color" id="color" name="color" class="admin-input" style="height: 38px; padding: 2px;" value="{{ editing_item.color if editing_item else '#3b82f6' }}">
+        </div>
+        <div class="admin-form-group">
+          <label for="display_order">Display Order</label>
+          <input type="number" id="display_order" name="display_order" class="admin-input" value="{{ editing_item.display_order if editing_item else 0 }}">
+        </div>
+      </div>
+
+      <div class="admin-checkbox-group">
+        <input type="checkbox" id="is_active" name="is_active" value="true" {% if editing_item and editing_item.is_active %}checked{% endif %}>
+        <label for="is_active" style="margin-bottom: 0;">Mark as Current Active Semester</label>
+      </div>
+
+      <button type="submit" class="admin-btn admin-btn-primary" style="width: 100%; margin-top: 10px;">
+        <i class="fa-solid fa-floppy-disk"></i> {{ 'Update Entry' if editing_item else 'Add Entry' }}
+      </button>
+    </form>
+  </div>
+
+  <!-- TABLE CARD: LIST -->
+  <div class="admin-card">
+    <div class="admin-card-header">
+      <div class="admin-card-title"><i class="fa-solid fa-list"></i> Timeline Entries</div>
+    </div>
+
+    <div class="admin-table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Stage</th>
+            <th>Title</th>
+            <th>Stats</th>
+            <th>Active</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in education_items %}
+            <tr>
+              <td><strong>{{ item.stage_num }}</strong></td>
+              <td>
+                <div style="font-weight: 600; color: var(--text-bright);">{{ item.title }}</div>
+                <div style="font-size: 11px; color: var(--text-muted);">{{ item.institution }} • {{ item.period }}</div>
+              </td>
+              <td style="font-size: 11px; font-family: var(--font-mono);">{{ item.stats }}</td>
+              <td>
+                {% if item.is_active %}
+                  <span class="admin-badge admin-badge-success">Active Sem</span>
+                {% else %}
+                  <form action="/admin/education/{{ item.id }}/set-active" method="POST" style="display:inline;">
+                    <button type="submit" class="admin-btn admin-btn-secondary admin-btn-sm" title="Set Active">Set Active</button>
+                  </form>
+                {% endif %}
+              </td>
+              <td>
+                <div style="display: flex; gap: 6px;">
+                  <a href="/admin/education?edit_id={{ item.id }}" class="admin-btn admin-btn-secondary admin-btn-sm" title="Edit">
+                    <i class="fa-solid fa-pen"></i>
+                  </a>
+                  <form action="/admin/education/{{ item.id }}/delete" method="POST" class="confirm-delete" data-item-title="{{ item.title }}">
+                    <button type="submit" class="admin-btn admin-btn-danger admin-btn-sm" title="Delete">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="5" style="text-align: center; color: var(--text-muted);">No education stages found.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ page_title|default('Admin Panel') }} — ZD Portfolio Admin{% endblock %}</title>
+  
+  <link rel="icon" type="image/png" href="{{ url_for('static', path='images/ZD.png') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', path='css/admin.css') }}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <div class="admin-app">
+    <!-- VS CODE SIDEBAR -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-header">
+        <img src="{{ url_for('static', path='images/ZD.png') }}" alt="ZD Logo" class="admin-brand-icon">
+        <span class="admin-brand-title">ZD PORTFOLIO // ADMIN</span>
+      </div>
+
+      <ul class="admin-nav-list">
+        <li class="admin-nav-item">
+          <a href="/admin/dashboard" class="admin-nav-link {% if active_page == 'dashboard' %}active{% endif %}">
+            <i class="fa-solid fa-chart-line"></i> <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/profile" class="admin-nav-link {% if active_page == 'profile' %}active{% endif %}">
+            <i class="fa-solid fa-user-gear"></i> <span>Profile</span>
+          </a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/education" class="admin-nav-link {% if active_page == 'education' %}active{% endif %}">
+            <i class="fa-solid fa-graduation-cap"></i> <span>Education</span>
+          </a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/skills" class="admin-nav-link {% if active_page == 'skills' %}active{% endif %}">
+            <i class="fa-solid fa-code"></i> <span>Skills</span>
+          </a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/projects" class="admin-nav-link {% if active_page == 'projects' %}active{% endif %}">
+            <i class="fa-solid fa-diagram-project"></i> <span>Projects</span>
+          </a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/certifications" class="admin-nav-link {% if active_page == 'certifications' %}active{% endif %}">
+            <i class="fa-solid fa-award"></i> <span>Certifications</span>
+          </a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/experience" class="admin-nav-link {% if active_page == 'experience' %}active{% endif %}">
+            <i class="fa-solid fa-briefcase"></i> <span>Experience</span>
+          </a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/resume" class="admin-nav-link {% if active_page == 'resume' %}active{% endif %}">
+            <i class="fa-solid fa-file-pdf"></i> <span>Resume</span>
+          </a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/messages" class="admin-nav-link {% if active_page == 'messages' %}active{% endif %}">
+            <i class="fa-solid fa-envelope"></i> <span>Contact Messages</span>
+          </a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/settings" class="admin-nav-link {% if active_page == 'settings' %}active{% endif %}">
+            <i class="fa-solid fa-sliders"></i> <span>Portfolio Settings</span>
+          </a>
+        </li>
+        <li class="admin-nav-item">
+          <a href="/admin/security" class="admin-nav-link {% if active_page == 'security' %}active{% endif %}">
+            <i class="fa-solid fa-shield-halved"></i> <span>Admin Security</span>
+          </a>
+        </li>
+        <li class="admin-nav-item" style="margin-top: 15px; border-top: 1px solid var(--vscode-border); padding-top: 10px;">
+          <a href="/admin/logout" class="admin-nav-link" style="color: var(--color-danger);">
+            <i class="fa-solid fa-right-from-bracket" style="color: var(--color-danger);"></i> <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="admin-sidebar-footer">
+        <span>VS Code Admin v1.0</span>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="admin-main-wrapper">
+      <!-- TOPBAR -->
+      <header class="admin-topbar">
+        <div class="admin-topbar-left">
+          <span class="admin-page-title">{{ page_title|default('Dashboard') }}</span>
+          <div class="admin-breadcrumbs">
+            <span>Admin</span> / <span>{{ page_title|default('Dashboard') }}</span>
+          </div>
+        </div>
+
+        <div class="admin-topbar-right">
+          <div class="admin-db-status">
+            <span class="dot"></span>
+            <span>SQLite Connected</span>
+          </div>
+
+          <div class="admin-user-badge">
+            <i class="fa-solid fa-user-shield"></i>
+            <span>{{ admin.email if admin else 'Administrator' }}</span>
+          </div>
+
+          <a href="/" target="_blank" class="admin-btn admin-btn-secondary admin-btn-sm" title="View Public Website">
+            <i class="fa-solid fa-globe"></i> Public Site
+          </a>
+
+          <a href="/admin/logout" class="admin-btn admin-btn-danger admin-btn-sm">
+            <i class="fa-solid fa-power-off"></i> Logout
+          </a>
+        </div>
+      </header>
+
+      <!-- CONTENT AREA -->
+      <main class="admin-content-container">
+        {% if success_msg %}
+          <div class="admin-alert admin-alert-success">
+            <i class="fa-solid fa-circle-check"></i> {{ success_msg }}
+          </div>
+        {% endif %}
+        {% if error_msg %}
+          <div class="admin-alert admin-alert-error">
+            <i class="fa-solid fa-triangle-exclamation"></i> {{ error_msg }}
+          </div>
+        {% endif %}
+
+        {% block admin_content %}{% endblock %}
+      </main>
+
+      <!-- STATUSBAR -->
+      <footer class="admin-statusbar">
+        <div>
+          <span><i class="fa-solid fa-database"></i> instance/portfolio.db</span>
+          <span style="margin-left: 15px;"><i class="fa-solid fa-lock"></i> Argon2id 2FA</span>
+        </div>
+        <div>
+          <span>FastAPI {{ app_version|default('v1.0.0') }}</span>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', path='js/admin.js') }}"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

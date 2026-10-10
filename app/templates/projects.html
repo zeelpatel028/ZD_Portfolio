@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Projects Showcase | {{ profile.name }}{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top: 8rem;">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-subtitle">
+        <i class="fa-solid fa-diagram-project"></i> Complete Portfolio
+      </span>
+      <h2 class="section-title gradient-text-anim">Projects & Repositories</h2>
+      <div class="section-header-divider"></div>
+      <p class="section-description">
+        Browse my complete catalog of open-source repositories, machine learning applications, backend APIs, and web projects.
+      </p>
+    </div>
+
+    <div class="projects-grid">
+      {% for proj in projects %}
+        <div class="project-card">
+          <div class="project-body">
+            <div class="project-header">
+              <span class="project-status {% if proj.status == 'Completed' %}status-completed{% else %}status-in-progress{% endif %}">
+                {{ proj.status }}
+              </span>
+              <span class="repo-tag">
+                <i class="fa-solid fa-code-commit"></i> {{ proj.repoName }}
+              </span>
+            </div>
+
+            <h3 class="project-title">{{ proj.title }}</h3>
+            <p class="project-desc">{{ proj.description }}</p>
+
+            {% if proj.features %}
+              <div style="margin-bottom: 1.2rem;">
+                <h4 class="specs-title">Key Architecture Highlights:</h4>
+                <ul class="project-features">
+                  {% for feat in proj.features %}
+                    <li>{{ feat }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
+            <div class="project-tech">
+              {% for tech in proj.techStack %}
+                <span class="tech-badge">{{ tech }}</span>
+              {% endfor %}
+            </div>
+
+            <div class="project-footer-btns">
+              <a href="{{ proj.githubUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                <i class="fa-brands fa-github"></i> Repository
+              </a>
+              {% if proj.liveDemoUrl and proj.liveDemoUrl != '#' %}
+                <a href="{{ proj.liveDemoUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

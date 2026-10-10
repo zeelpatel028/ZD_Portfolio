@@ -1,0 +1,630 @@
+{% extends "base.html" %}
+
+{% block title %}{{ profile.name }} | Computer Science Engineer & Backend Python Developer{% endblock %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero" id="hero">
+  <div class="hero-ambient-orb-1" aria-hidden="true"></div>
+  <div class="hero-ambient-orb-2" aria-hidden="true"></div>
+
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <!-- Status Beacon Indicator -->
+      <div class="hero-status-pill">
+        <span class="status-beacon"></span>
+        <span class="status-pill-text">Available for Engineering Roles & Internships</span>
+      </div>
+
+      <h1 class="hero-title">
+        I AM <span class="highlight gradient-text-anim">{{ profile.name }}</span>
+      </h1>
+
+      <p class="hero-subtitle-lead">
+        I'm <strong>{{ profile.name }}</strong> — a Computer Science Engineering student focused on backend development, Python, machine learning, and building practical software solutions.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="hero-buttons">
+        <a href="#projects" class="btn btn-primary">
+          <i class="fa-solid fa-rocket"></i> View My Projects
+        </a>
+        <a href="{{ profile.resume_url }}" download="Zeel_Dobariya_Resume.pdf" class="btn btn-outline">
+          <i class="fa-solid fa-file-arrow-down"></i> Download Resume
+        </a>
+      </div>
+
+      <!-- Quick Social Profile Links -->
+      <div class="hero-social-links">
+        <span class="social-label">Connect:</span>
+        <a href="{{ profile.github }}" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="GitHub Profile">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="{{ profile.linkedin }}" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="LinkedIn Profile">
+          <i class="fa-brands fa-linkedin-in"></i>
+        </a>
+        <a href="mailto:{{ profile.email }}" class="social-icon-btn" title="Send Email">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+      </div>
+
+      <!-- Quick Telemetry Metrics -->
+      <div class="hero-stats-bar">
+        <div class="hero-stat-box">
+          <div class="num">8.17</div>
+          <div class="lbl">SPI Score</div>
+        </div>
+        <div class="hero-stat-box">
+          <div class="num">81.6%</div>
+          <div class="lbl">Academic Percentile</div>
+        </div>
+        <div class="hero-stat-box">
+          <div class="num">6+</div>
+          <div class="lbl">Deployed Projects</div>
+        </div>
+        <div class="hero-stat-box">
+          <div class="num">Sem 4</div>
+          <div class="lbl">B.Tech CSE</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Character & Avatar Interactive Profile Card -->
+    <div class="hero-card">
+      <div id="hero-avatar-wrapper" class="hero-avatar-wrapper" title="Click to switch profile view (Auto-toggles every 5s)">
+        <div class="hero-avatar-inner">
+          <img id="portrait-real" src="{{ profile.photo_url }}" alt="Zeel Dobariya Profile Photo" class="hero-avatar-portrait active">
+          <img id="portrait-cyber" src="{{ profile.avatar_url }}" alt="Zeel Dobariya Developer Illustration" class="hero-avatar-portrait">
+
+          <!-- Scanner overlay -->
+          <div id="laser-scanner-overlay" class="laser-scanner-overlay" aria-hidden="true">
+            <div class="laser-beam-line"></div>
+            <div class="laser-grid-mesh"></div>
+            <div class="scanner-status-text">
+              <i class="fa-solid fa-arrows-rotate"></i> RECONFIGURING VIEW
+            </div>
+          </div>
+
+          <div class="avatar-vignette"></div>
+        </div>
+
+        <div class="avatar-mode-pill">
+          <span id="avatar-mode-dot" class="avatar-mode-dot"></span>
+          <span id="avatar-mode-title">PRO PROFILE</span>
+          <span class="avatar-mode-tag">5s AUTO</span>
+        </div>
+      </div>
+
+      <div class="hero-badges-wrapper">
+        <div class="floating-badge floating-badge-1">
+          <div class="badge-icon"><i class="fa-solid fa-brain"></i></div>
+          <div class="badge-text">
+            <div class="val">Machine Learning</div>
+            <div class="lbl">Predictive Models & Scikit-Learn</div>
+          </div>
+        </div>
+
+        <div class="floating-badge floating-badge-2">
+          <div class="badge-icon"><i class="fa-solid fa-server"></i></div>
+          <div class="badge-text">
+            <div class="val">Backend Engineering</div>
+            <div class="lbl">FastAPI, Python & SQL Databases</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT ME SECTION -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-subtitle">
+        <i class="fa-solid fa-user"></i> About Me
+      </span>
+      <h2 class="section-title gradient-text-anim">Background & Engineering Approach</h2>
+      <div class="section-header-divider"></div>
+      <p class="section-description">
+        Passionate about crafting scalable backend systems, data pipelines, and intelligent machine learning applications.
+      </p>
+    </div>
+
+    <div class="about-grid">
+      <!-- Column 1: Introduction & Philosophy -->
+      <div class="about-card">
+        <h3 class="about-card-title">
+          <i class="fa-solid fa-code"></i> Developer Overview
+        </h3>
+        
+        <p class="about-text">
+          I am currently pursuing my <strong>B.Tech in Computer Science Engineering</strong> at <strong>LJ University, Ahmedabad (2024–2028)</strong>. My passion lies in building efficient backend services, database architectures, and machine learning models that address real-world challenges.
+        </p>
+
+        <p class="about-text">
+          Whether designing predictive AI algorithms (like <em>AgroVision</em> crop recommendation engine) or developing full-stack web platforms (like <em>Tripzza</em> travel booking portal), I focus on clean code, performance, and strong problem-solving principles.
+        </p>
+
+        <div class="about-highlights">
+          <div class="highlight-item">
+            <i class="fa-solid fa-brain"></i>
+            <h4>Machine Learning & Data Science</h4>
+            <p>Supervised Learning, Pandas, NumPy, Scikit-Learn pipelines & Data Analysis</p>
+          </div>
+          <div class="highlight-item">
+            <i class="fa-solid fa-server"></i>
+            <h4>Backend Architecture & APIs</h4>
+            <p>Python FastAPI, Express.js, Java JDBC, SQLite, PostgreSQL & MySQL</p>
+          </div>
+          <div class="highlight-item">
+            <i class="fa-solid fa-lightbulb"></i>
+            <h4>Problem Solving & DSA</h4>
+            <p>Data Structures, Algorithmic Logic & Clean Object-Oriented Design</p>
+          </div>
+          <div class="highlight-item">
+            <i class="fa-solid fa-bullseye"></i>
+            <h4>Career Aspirations</h4>
+            <p>Targeting ML Engineering and High-Impact Backend Development roles</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 2: Live Semester Progress Widget -->
+      <div class="semester-widget">
+        <div class="widget-header">
+          <div class="widget-title-area">
+            <div class="widget-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div>
+              <h3 style="font-size: 1.15rem; color: var(--text-main); font-weight: 700;">Academic Progression</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">LJ University — B.Tech CSE (2024–2028)</p>
+            </div>
+          </div>
+          <span class="live-badge"><i class="fa-solid fa-bolt"></i> FASTAPI LIVE</span>
+        </div>
+
+        <div class="current-sem-display">
+          <div class="sem-number-hero">SEMESTER {{ sem_data.currentSemester if sem_data and sem_data.currentSemester else '4' }}</div>
+          <div class="sem-subtitle">Current Active Academic Term</div>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-info">
+            <span>B.Tech Degree Completion</span>
+            <span style="color: var(--color-peach); font-weight: 700;">{{ sem_data.progressPercent if sem_data and sem_data.progressPercent else 50 }}%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="--progress-width: {{ sem_data.progressPercent if sem_data and sem_data.progressPercent else 50 }}%; width: var(--progress-width, 50%);"></div>
+          </div>
+        </div>
+
+        <div class="sem-timeline-chips">
+          {% for s in (sem_data.semesters if sem_data and sem_data.semesters else []) %}
+            <div class="sem-chip {{ s.status.lower() }}">
+              Sem {{ s.sem }} {% if s.status == 'Completed' %}✓{% elif s.status == 'Active' %}⚡{% else %}🔒{% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEW SECTION: COMPANY & WORK EXPERIENCE -->
+<section class="section" id="experience" style="background: var(--bg-section-alt);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-subtitle">
+        <i class="fa-solid fa-briefcase"></i> Work Experience
+      </span>
+      <h2 class="section-title gradient-text-anim">Company & Professional Experience</h2>
+      <div class="section-header-divider"></div>
+      <p class="section-description">
+        Professional roles, internships, company collaborations, and practical contributions to software engineering projects.
+      </p>
+    </div>
+
+    {% if experiences %}
+      <div class="experience-timeline">
+        {% for exp in experiences %}
+          <div class="experience-card">
+            <div class="experience-header">
+              <div class="experience-company-logo">
+                {% if exp.company_logo_url %}
+                  <img src="{{ exp.company_logo_url }}" alt="{{ exp.company_name }} Logo">
+                {% else %}
+                  <i class="fa-solid fa-building"></i>
+                {% endif %}
+              </div>
+              <div class="experience-title-group">
+                <div class="experience-role">{{ exp.role_title }}</div>
+                <div class="experience-company-name">
+                  <span>{{ exp.company_name }}</span>
+                  {% if exp.company_url %}
+                    <a href="{{ exp.company_url }}" target="_blank" rel="noopener noreferrer" class="company-link" title="Visit Company Website">
+                      <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="experience-meta-badges">
+                <span class="exp-badge exp-badge-type">{{ exp.employment_type or 'Full-time' }}</span>
+                <span class="exp-badge exp-badge-date">
+                  <i class="fa-regular fa-calendar"></i> {{ exp.start_date }} – {{ exp.end_date or 'Present' }}
+                </span>
+                {% if exp.location %}
+                  <span class="exp-badge exp-badge-location">
+                    <i class="fa-solid fa-location-dot"></i> {{ exp.location }}
+                  </span>
+                {% endif %}
+              </div>
+            </div>
+
+            {% if exp.company_description %}
+              <p class="experience-company-desc">{{ exp.company_description }}</p>
+            {% endif %}
+
+            {% if exp.responsibilities %}
+              <div class="experience-details-block">
+                <h4 class="details-heading"><i class="fa-solid fa-list-check"></i> Responsibilities & Contributions:</h4>
+                <ul class="experience-bullet-list">
+                  {% for item in exp.responsibilities %}
+                    <li>{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
+            {% if exp.key_achievements %}
+              <div class="experience-details-block" style="margin-top: 0.8rem;">
+                <h4 class="details-heading"><i class="fa-solid fa-trophy"></i> Key Achievements:</h4>
+                <ul class="experience-bullet-list achievements">
+                  {% for ach in exp.key_achievements %}
+                    <li>{{ ach }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
+            {% if exp.tech_stack %}
+              <div class="experience-tech-stack">
+                {% for tech in exp.tech_stack %}
+                  <span class="tech-badge">{{ tech }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <!-- Professional Empty State -->
+      <div class="experience-empty-state">
+        <div class="empty-icon"><i class="fa-solid fa-briefcase"></i></div>
+        <h3>Professional Experience Pipeline Open</h3>
+        <p>Currently actively seeking Internship and Software Developer opportunities. In the meantime, explore my battle-tested projects and technical loadouts below!</p>
+        <a href="#projects" class="btn btn-outline btn-sm" style="margin-top: 1rem;">
+          <i class="fa-solid fa-diagram-project"></i> Explore Projects
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- EDUCATION TIMELINE SECTION -->
+<section class="section" id="education">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-subtitle">
+        <i class="fa-solid fa-graduation-cap"></i> Academic Timeline
+      </span>
+      <h2 class="section-title gradient-text-anim">Education & Qualifications</h2>
+      <div class="section-header-divider"></div>
+      <p class="section-description">
+        Comprehensive academic background detailing SPI scores, overall marks, percentile rankings, and semester milestones.
+      </p>
+    </div>
+
+    <div class="svg-timeline-wrapper">
+      <div class="timeline-scroll-track">
+        <div class="curved-timeline-canvas-scroll">
+          <svg class="timeline-svg-road-scroll" viewBox="0 0 1750 480" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="roadGradLine" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#7C8CFF" stop-opacity="0.85" />
+                <stop offset="50%" stop-color="#55D6BE" stop-opacity="0.85" />
+                <stop offset="100%" stop-color="#7C8CFF" stop-opacity="0.95" />
+              </linearGradient>
+            </defs>
+            <path d="M 60,240 C 180,80 300,80 420,240 C 540,400 660,400 780,240 C 900,80 1020,80 1140,240 C 1260,400 1380,400 1500,240 C 1600,100 1680,100 1710,240"
+              fill="none" stroke="url(#roadGradLine)" stroke-width="8" stroke-linecap="round" />
+          </svg>
+
+          <div class="cards-scroll-layer">
+            {% for step in education_steps %}
+              {% set is_top = loop.index0 % 2 == 0 %}
+              <div class="scroll-block-card {% if is_top %}scroll-align-top{% else %}scroll-align-bottom{% endif %} {% if step.isActive %}block-active{% endif %}"
+                data-num="{{ step.num }}"
+                data-period="{{ step.period }}"
+                data-title="{{ step.title }}"
+                data-institution="{{ step.institution }}"
+                data-stats="{{ step.stats }}"
+                data-grade="{{ step.grade }}"
+                data-color="{{ step.color }}"
+                data-points='{{ step.shortPoints | tojson }}'
+                data-projecttitle="{{ step.projectTitle or '' }}"
+                data-projectdesc="{{ step.projectDesc or '' }}"
+                data-tech='{{ (step.tech or []) | tojson }}'
+              >
+                <div class="scroll-num-tag" style="--step-bg: {{ step.color }}; background: var(--step-bg, #997E67);">
+                  {{ step.num }}
+                </div>
+                <div class="scroll-card-header">
+                  <span class="scroll-period">{{ step.period }}</span>
+                  <span class="scroll-type" style="--step-color: {{ step.color }}; color: var(--step-color, #997E67);">{{ step.type }}</span>
+                </div>
+                <h4 class="scroll-title">{{ step.title }}</h4>
+                <div class="scroll-stat-badge">{{ step.stats }}</div>
+                <ul class="scroll-short-list">
+                  {% for pt in step.shortPoints[:2] %}
+                    <li>{{ pt }}</li>
+                  {% endfor %}
+                </ul>
+                <div class="scroll-hover-hint">
+                  <i class="fa-solid fa-expand"></i> View Details
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS SECTION -->
+<section class="section" id="skills" style="background: var(--bg-section-alt);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-subtitle">
+        <i class="fa-solid fa-code"></i> Technical Stack
+      </span>
+      <h2 class="section-title gradient-text-anim">Skills & Technologies</h2>
+      <div class="section-header-divider"></div>
+      <p class="section-description">
+        Grouped technical capabilities across programming languages, backend frameworks, data science libraries, and developer tools.
+      </p>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="skills-filter-tabs">
+      <button class="skills-tab-btn active" data-category="All">
+        <i class="fa-solid fa-border-all"></i> All Categories
+      </button>
+      {% for cat in skills %}
+        <button class="skills-tab-btn" data-category="{{ cat.category }}">
+          <i class="{{ cat.icon }}"></i> {{ cat.category }}
+        </button>
+      {% endfor %}
+    </div>
+
+    <!-- Skills Cards Grid -->
+    <div id="skills-grid" class="skills-grid">
+      {% for cat in skills %}
+        <div class="skill-card" data-category="{{ cat.category }}">
+          <div class="skill-card-header">
+            <div class="skill-icon-box">
+              <i class="{{ cat.icon }}"></i>
+            </div>
+            <div>
+              <h3>{{ cat.category }}</h3>
+              <span class="skill-count-badge">{{ cat.skills | length }} Technologies</span>
+            </div>
+          </div>
+
+          <div class="skill-tags">
+            {% for s in cat.skills %}
+              <span class="skill-tag">
+                <i class="skill-tag-icon {{ s.icon }}"></i>
+                <span class="skill-tag-name">{{ s.name }}</span>
+              </span>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS SECTION -->
+<section class="section" id="projects">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-subtitle">
+        <i class="fa-solid fa-diagram-project"></i> Portfolio Showcase
+      </span>
+      <h2 class="section-title gradient-text-anim">Featured Projects & Repositories</h2>
+      <div class="section-header-divider"></div>
+      <p class="section-description">
+        A selection of backend systems, machine learning recommendation engines, and full-stack software applications.
+      </p>
+    </div>
+
+    <div class="projects-grid">
+      {% for proj in projects %}
+        <div class="project-card">
+          <div class="project-body">
+            <div class="project-header">
+              <span class="project-status {% if proj.status == 'Completed' %}status-completed{% else %}status-in-progress{% endif %}">
+                {{ proj.status }}
+              </span>
+              <span class="repo-tag">
+                <i class="fa-solid fa-code-commit"></i> {{ proj.repoName }}
+              </span>
+            </div>
+
+            <h3 class="project-title">{{ proj.title }}</h3>
+            <p class="project-desc">{{ proj.description }}</p>
+
+            {% if proj.features %}
+              <div style="margin-bottom: 1.2rem;">
+                <h4 class="specs-title">Key Architecture Highlights:</h4>
+                <ul class="project-features">
+                  {% for feat in proj.features %}
+                    <li>{{ feat }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
+            <div class="project-tech">
+              {% for tech in proj.techStack %}
+                <span class="tech-badge">{{ tech }}</span>
+              {% endfor %}
+            </div>
+
+            <div class="project-footer-btns">
+              <a href="{{ proj.githubUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                <i class="fa-brands fa-github"></i> Repository
+              </a>
+              {% if proj.liveDemoUrl and proj.liveDemoUrl != '#' %}
+                <a href="{{ proj.liveDemoUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS SECTION -->
+<section class="section" id="certifications" style="background: var(--bg-section-alt);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-subtitle">
+        <i class="fa-solid fa-award"></i> Verified Credentials
+      </span>
+      <h2 class="section-title gradient-text-anim">Certifications & Achievements</h2>
+      <div class="section-header-divider"></div>
+      <p class="section-description">
+        Verified certifications, hackathon awards, and specialized technical training courses.
+      </p>
+    </div>
+
+    <div class="cert-grid">
+      {% for c in certs %}
+        <div class="cert-card">
+          <div class="cert-icon"><i class="fa-solid {{ c.icon }}"></i></div>
+          <div class="cert-info">
+            <h4>{{ c.title }}</h4>
+            <p>{{ c.description }}</p>
+            {% if c.issuingOrganization %}
+              <div class="cert-org"><i class="fa-solid fa-building"></i> {{ c.issuingOrganization }}</div>
+            {% endif %}
+            {% if c.credentialUrl %}
+              <a href="{{ c.credentialUrl }}" target="_blank" rel="noopener noreferrer" class="cert-link">
+                Verify Credential <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-subtitle">
+        <i class="fa-solid fa-paper-plane"></i> Direct Connection
+      </span>
+      <h2 class="section-title gradient-text-anim">Get In Touch</h2>
+      <div class="section-header-divider"></div>
+      <p class="section-description">
+        Interested in discussing a backend engineering position, ML collaboration, or project inquiry? Send a message directly below.
+      </p>
+    </div>
+
+    <div class="contact-grid">
+      <!-- Contact Info Box -->
+      <div class="contact-info-card">
+        <h3>Contact Information</h3>
+
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+          <div class="contact-detail">
+            <div class="label">Email Address</div>
+            <div class="val">{{ profile.email }}</div>
+          </div>
+          <button class="copy-btn" data-copytext="{{ profile.email }}" title="Copy Email">
+            <i class="fa-solid fa-copy"></i>
+          </button>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fa-brands fa-linkedin-in"></i></div>
+          <div class="contact-detail">
+            <div class="label">LinkedIn</div>
+            <div class="val">
+              <a href="{{ profile.linkedin }}" target="_blank" rel="noopener noreferrer">
+                linkedin.com/in/zeel-dobariya
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fa-brands fa-github"></i></div>
+          <div class="contact-detail">
+            <div class="label">GitHub Repository</div>
+            <div class="val">
+              <a href="{{ profile.github }}" target="_blank" rel="noopener noreferrer">
+                github.com/zeelpatel028
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div class="contact-detail">
+            <div class="label">Location</div>
+            <div class="val">{{ profile.location }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Contact Form -->
+      <div class="contact-info-card">
+        <h3>Send a Message</h3>
+
+        <form id="contact-form" action="/contact" method="POST">
+          <div class="form-group">
+            <label class="form-label" for="contact-name">Your Full Name</label>
+            <input type="text" id="contact-name" name="name" class="form-input" required placeholder="John Doe">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-email">Your Email Address</label>
+            <input type="email" id="contact-email" name="email" class="form-input" required placeholder="john@example.com">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-message">Message</label>
+            <textarea id="contact-message" name="message" class="form-textarea" rows="4" required placeholder="Hello Zeel, I would like to discuss..."></textarea>
+          </div>
+
+          <button type="submit" id="contact-submit-btn" class="btn btn-primary">
+            <i class="fa-solid fa-paper-plane"></i> Send Message
+          </button>
+
+          <p id="contact-status-msg" style="margin-top: 1rem; font-size: 0.92rem; font-weight: 600;"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

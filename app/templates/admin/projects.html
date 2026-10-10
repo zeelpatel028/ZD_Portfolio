@@ -1,0 +1,182 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<div class="admin-header-row">
+  <div>
+    <h1>Projects Portfolio Management</h1>
+    <p style="font-size: 12px; color: var(--text-muted);">Complete CRUD management for portfolio projects, repositories, thumbnails, and publication state</p>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px;">
+
+  <!-- FORM CARD: ADD / EDIT PROJECT -->
+  <div class="admin-card">
+    <div class="admin-card-header">
+      <div class="admin-card-title">
+        <i class="fa-solid fa-diagram-project"></i> {{ 'Edit Project' if editing_project else 'Add New Project' }}
+      </div>
+      {% if editing_project %}
+        <a href="/admin/projects" class="admin-btn admin-btn-secondary admin-btn-sm">Cancel</a>
+      {% endif %}
+    </div>
+
+    <form action="/admin/projects" method="POST" enctype="multipart/form-data">
+      {% if editing_project %}
+        <input type="hidden" name="proj_id" value="{{ editing_project.id }}">
+      {% endif %}
+
+      <div class="admin-form-group">
+        <label for="title">Project Title</label>
+        <input type="text" id="title" name="title" class="admin-input" placeholder="e.g. AgroVision AI Platform" value="{{ editing_project.title if editing_project else '' }}" required>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="admin-form-group">
+          <label for="type">Category / Type</label>
+          <input type="text" id="type" name="type" class="admin-input" placeholder="e.g. AI & Smart Agriculture" value="{{ editing_project.type if editing_project else '' }}" required>
+        </div>
+        <div class="admin-form-group">
+          <label for="status">Status</label>
+          <select id="status" name="status" class="admin-select">
+            <option value="Active" {% if editing_project and editing_project.status == 'Active' %}selected{% endif %}>Active</option>
+            <option value="Completed" {% if not editing_project or editing_project.status == 'Completed' %}selected{% endif %}>Completed</option>
+            <option value="Upcoming" {% if editing_project and editing_project.status == 'Upcoming' %}selected{% endif %}>Upcoming</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="repo_name">Repository Name (Optional)</label>
+        <input type="text" id="repo_name" name="repo_name" class="admin-input" placeholder="AgroVision_AI" value="{{ editing_project.repo_name if editing_project and editing_project.repo_name else '' }}">
+      </div>
+
+      <div class="admin-form-group">
+        <label for="short_description">Short Summary</label>
+        <textarea id="short_description" name="short_description" class="admin-textarea" required>{{ editing_project.short_description if editing_project else '' }}</textarea>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="features">Key Features (One feature per line)</label>
+        <textarea id="features" name="features" class="admin-textarea" placeholder="Supervised ML model engine&#10;Real-time market price dashboard">{{ editing_project.features|join('\n') if editing_project else '' }}</textarea>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="tech_stack">Tech Stack (Comma separated)</label>
+        <input type="text" id="tech_stack" name="tech_stack" class="admin-input" placeholder="Python, FastAPI, React.js, PostgreSQL" value="{{ editing_project.tech_stack|join(', ') if editing_project else '' }}">
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="admin-form-group">
+          <label for="github_url">GitHub URL</label>
+          <input type="url" id="github_url" name="github_url" class="admin-input" value="{{ editing_project.github_url if editing_project and editing_project.github_url else '' }}">
+        </div>
+        <div class="admin-form-group">
+          <label for="live_demo_url">Live Demo URL</label>
+          <input type="url" id="live_demo_url" name="live_demo_url" class="admin-input" value="{{ editing_project.live_demo_url if editing_project and editing_project.live_demo_url else '' }}">
+        </div>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="image">Project Thumbnail Image</label>
+        <input type="file" id="image" name="image" accept="image/*" class="admin-input" data-preview-target="project-img-preview">
+        {% if editing_project and editing_project.image_url %}
+          <div style="margin-top: 8px;">
+            <img id="project-img-preview" src="{{ editing_project.image_url }}" alt="Project Thumbnail" style="max-height: 80px; border-radius: 4px;">
+          </div>
+        {% else %}
+          <img id="project-img-preview" src="" alt="Preview" style="max-height: 80px; border-radius: 4px; display: none; margin-top: 8px;">
+        {% endif %}
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="admin-checkbox-group">
+          <input type="checkbox" id="is_featured" name="is_featured" value="true" {% if editing_project and editing_project.is_featured %}checked{% endif %}>
+          <label for="is_featured" style="margin-bottom:0;">Featured Project</label>
+        </div>
+        <div class="admin-checkbox-group">
+          <input type="checkbox" id="is_published" name="is_published" value="true" {% if not editing_project or editing_project.is_published %}checked{% endif %}>
+          <label for="is_published" style="margin-bottom:0;">Published</label>
+        </div>
+      </div>
+
+      <button type="submit" class="admin-btn admin-btn-primary" style="width: 100%; margin-top: 10px;">
+        <i class="fa-solid fa-floppy-disk"></i> {{ 'Update Project' if editing_project else 'Create Project' }}
+      </button>
+    </form>
+  </div>
+
+  <!-- TABLE CARD: PROJECTS LIST -->
+  <div class="admin-card">
+    <div class="admin-card-header">
+      <div class="admin-card-title"><i class="fa-solid fa-folder-open"></i> Projects Database</div>
+      <form action="/admin/projects" method="GET" style="display: flex; gap: 6px;">
+        <input type="text" name="search" class="admin-input" placeholder="Search projects..." value="{{ search_query }}" style="width: 160px; padding: 4px 8px;">
+        <button type="submit" class="admin-btn admin-btn-secondary admin-btn-sm"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
+    </div>
+
+    <div class="admin-table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Featured</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for proj in projects %}
+            <tr>
+              <td>
+                <div style="font-weight: 600; color: var(--text-bright);">{{ proj.title }}</div>
+                <div style="font-size: 11px; color: var(--text-muted);">
+                  {% if proj.github_url %}<a href="{{ proj.github_url }}" target="_blank"><i class="fa-brands fa-github"></i> Repo</a>{% endif %}
+                </div>
+              </td>
+              <td><span style="font-size: 11px; color: var(--color-taupe);">{{ proj.type }}</span></td>
+              <td>
+                <form action="/admin/projects/{{ proj.id }}/toggle-featured" method="POST" style="display:inline;">
+                  {% if proj.is_featured %}
+                    <button type="submit" class="admin-badge admin-badge-warning" style="cursor:pointer; border:none;">Featured</button>
+                  {% else %}
+                    <button type="submit" class="admin-badge admin-badge-muted" style="cursor:pointer; border:none;">Standard</button>
+                  {% endif %}
+                </form>
+              </td>
+              <td>
+                <form action="/admin/projects/{{ proj.id }}/toggle-published" method="POST" style="display:inline;">
+                  {% if proj.is_published %}
+                    <button type="submit" class="admin-badge admin-badge-success" style="cursor:pointer; border:none;">Published</button>
+                  {% else %}
+                    <button type="submit" class="admin-badge admin-badge-muted" style="cursor:pointer; border:none;">Draft / Hidden</button>
+                  {% endif %}
+                </form>
+              </td>
+              <td>
+                <div style="display: flex; gap: 6px;">
+                  <a href="/admin/projects?edit_id={{ proj.id }}" class="admin-btn admin-btn-secondary admin-btn-sm" title="Edit">
+                    <i class="fa-solid fa-pen"></i>
+                  </a>
+                  <form action="/admin/projects/{{ proj.id }}/delete" method="POST" class="confirm-delete" data-item-title="{{ proj.title }}">
+                    <button type="submit" class="admin-btn admin-btn-danger admin-btn-sm" title="Delete">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="5" style="text-align: center; color: var(--text-muted);">No projects found.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

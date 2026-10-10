@@ -1,0 +1,135 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<div class="admin-header-row">
+  <div>
+    <h1>Certifications & Achievements</h1>
+    <p style="font-size: 12px; color: var(--text-muted);">Manage verified credentials, hackathon awards, certificates, and verification links</p>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px;">
+
+  <!-- FORM CARD: ADD / EDIT CERTIFICATION -->
+  <div class="admin-card">
+    <div class="admin-card-header">
+      <div class="admin-card-title">
+        <i class="fa-solid fa-award"></i> {{ 'Edit Certification' if editing_cert else 'Add New Certification' }}
+      </div>
+      {% if editing_cert %}
+        <a href="/admin/certifications" class="admin-btn admin-btn-secondary admin-btn-sm">Cancel</a>
+      {% endif %}
+    </div>
+
+    <form action="/admin/certifications" method="POST" enctype="multipart/form-data">
+      {% if editing_cert %}
+        <input type="hidden" name="cert_id" value="{{ editing_cert.id }}">
+      {% endif %}
+
+      <div class="admin-form-group">
+        <label for="title">Certification Title</label>
+        <input type="text" id="title" name="title" class="admin-input" placeholder="e.g. IIT Bombay – Data Science" value="{{ editing_cert.title if editing_cert else '' }}" required>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="issuing_organization">Issuing Organization</label>
+        <input type="text" id="issuing_organization" name="issuing_organization" class="admin-input" placeholder="IIT Bombay / LD College" value="{{ editing_cert.issuing_organization if editing_cert and editing_cert.issuing_organization else '' }}">
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="admin-form-group">
+          <label for="issue_date">Issue Date</label>
+          <input type="text" id="issue_date" name="issue_date" class="admin-input" placeholder="e.g. 2024" value="{{ editing_cert.issue_date if editing_cert and editing_cert.issue_date else '' }}">
+        </div>
+        <div class="admin-form-group">
+          <label for="icon">Icon Class (FontAwesome)</label>
+          <input type="text" id="icon" name="icon" class="admin-input" value="{{ editing_cert.icon if editing_cert else 'fa-award' }}" required>
+        </div>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="credential_url">Credential Verification Link</label>
+        <input type="url" id="credential_url" name="credential_url" class="admin-input" placeholder="https://..." value="{{ editing_cert.credential_url if editing_cert and editing_cert.credential_url else '' }}">
+      </div>
+
+      <div class="admin-form-group">
+        <label for="description">Description & Details</label>
+        <textarea id="description" name="description" class="admin-textarea" required>{{ editing_cert.description if editing_cert else '' }}</textarea>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="document">Certificate File / Image (Optional)</label>
+        <input type="file" id="document" name="document" class="admin-input">
+      </div>
+
+      <div class="admin-checkbox-group">
+        <input type="checkbox" id="is_published" name="is_published" value="true" {% if not editing_cert or editing_cert.is_published %}checked{% endif %}>
+        <label for="is_published" style="margin-bottom:0;">Published (Visible on portfolio)</label>
+      </div>
+
+      <button type="submit" class="admin-btn admin-btn-primary" style="width: 100%; margin-top: 10px;">
+        <i class="fa-solid fa-floppy-disk"></i> {{ 'Update Certification' if editing_cert else 'Add Certification' }}
+      </button>
+    </form>
+  </div>
+
+  <!-- TABLE CARD: CERTIFICATIONS LIST -->
+  <div class="admin-card">
+    <div class="admin-card-header">
+      <div class="admin-card-title"><i class="fa-solid fa-list-check"></i> Certifications List</div>
+    </div>
+
+    <div class="admin-table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Icon</th>
+            <th>Title</th>
+            <th>Organization</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cert in certifications %}
+            <tr>
+              <td><i class="fa-solid {{ cert.icon }}" style="font-size: 18px; color: var(--color-peach);"></i></td>
+              <td>
+                <div style="font-weight: 600; color: var(--text-bright);">{{ cert.title }}</div>
+                <div style="font-size: 11px; color: var(--text-muted);">{{ cert.description[:60] }}...</div>
+              </td>
+              <td><span style="font-size: 11px; color: var(--color-taupe);">{{ cert.issuing_organization or 'Self' }}</span></td>
+              <td>
+                <form action="/admin/certifications/{{ cert.id }}/toggle-published" method="POST" style="display:inline;">
+                  {% if cert.is_published %}
+                    <button type="submit" class="admin-badge admin-badge-success" style="cursor:pointer; border:none;">Published</button>
+                  {% else %}
+                    <button type="submit" class="admin-badge admin-badge-muted" style="cursor:pointer; border:none;">Hidden</button>
+                  {% endif %}
+                </form>
+              </td>
+              <td>
+                <div style="display: flex; gap: 6px;">
+                  <a href="/admin/certifications?edit_id={{ cert.id }}" class="admin-btn admin-btn-secondary admin-btn-sm" title="Edit">
+                    <i class="fa-solid fa-pen"></i>
+                  </a>
+                  <form action="/admin/certifications/{{ cert.id }}/delete" method="POST" class="confirm-delete" data-item-title="{{ cert.title }}">
+                    <button type="submit" class="admin-btn admin-btn-danger admin-btn-sm" title="Delete">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="5" style="text-align: center; color: var(--text-muted);">No certifications found.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

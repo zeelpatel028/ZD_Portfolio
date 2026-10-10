@@ -1,0 +1,103 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<div class="admin-header-row">
+  <div>
+    <h1>Contact Form Messages</h1>
+    <p style="font-size: 12px; color: var(--text-muted);">View, search, filter, and manage messages submitted by website visitors</p>
+  </div>
+</div>
+
+<div class="admin-card">
+  <div class="admin-card-header">
+    <div class="admin-card-title"><i class="fa-solid fa-inbox"></i> Inbox ({{ total_messages }} total)</div>
+    
+    <form action="/admin/messages" method="GET" style="display: flex; gap: 8px;">
+      <select name="filter_read" class="admin-select" style="width: 120px; padding: 4px 8px;">
+        <option value="all" {% if filter_read == 'all' %}selected{% endif %}>All Messages</option>
+        <option value="unread" {% if filter_read == 'unread' %}selected{% endif %}>Unread Only</option>
+        <option value="read" {% if filter_read == 'read' %}selected{% endif %}>Read Only</option>
+      </select>
+
+      <input type="text" name="search" class="admin-input" placeholder="Search name/email..." value="{{ search_query }}" style="width: 180px; padding: 4px 8px;">
+      <button type="submit" class="admin-btn admin-btn-secondary admin-btn-sm"><i class="fa-solid fa-magnifying-glass"></i> Filter</button>
+    </form>
+  </div>
+
+  <div class="admin-table-container">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Sender</th>
+          <th>Subject / Message Preview</th>
+          <th>Received Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for msg in messages %}
+          <tr {% if not msg.is_read %}style="font-weight: 600; background-color: rgba(255, 219, 187, 0.03);"{% endif %}>
+            <td>
+              <div style="color: var(--text-bright);">{{ msg.sender_name }}</div>
+              <div style="font-size: 11px; color: var(--text-muted);"><a href="mailto:{{ msg.sender_email }}">{{ msg.sender_email }}</a></div>
+            </td>
+            <td>
+              <div style="font-size: 12px; color: var(--color-peach);">{{ msg.subject or 'No Subject' }}</div>
+              <div style="font-size: 11px; color: var(--text-muted); max-width: 400px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                {{ msg.message }}
+              </div>
+            </td>
+            <td style="font-family: var(--font-mono); font-size: 11px;">{{ msg.received_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>
+              {% if msg.is_read %}
+                <span class="admin-badge admin-badge-muted">Read</span>
+              {% else %}
+                <span class="admin-badge admin-badge-warning">Unread</span>
+              {% endif %}
+            </td>
+            <td>
+              <div style="display: flex; gap: 6px;">
+                <button type="button" class="admin-btn admin-btn-secondary admin-btn-sm view-msg-btn" data-sender="{{ msg.sender_name }}" data-email="{{ msg.sender_email }}" data-date="{{ msg.received_at.strftime('%Y-%m-%d %H:%M') }}" data-message="{{ msg.message }}" title="View Message">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+                
+                <form action="/admin/messages/{{ msg.id }}/toggle-read" method="POST" style="display:inline;">
+                  <button type="submit" class="admin-btn admin-btn-secondary admin-btn-sm" title="Toggle Read">
+                    <i class="fa-solid {% if msg.is_read %}fa-envelope-open{% else %}fa-envelope{% endif %}"></i>
+                  </button>
+                </form>
+
+                <form action="/admin/messages/{{ msg.id }}/delete" method="POST" class="confirm-delete" data-item-title="Message from {{ msg.sender_name }}">
+                  <button type="submit" class="admin-btn admin-btn-danger admin-btn-sm" title="Delete">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="5" style="text-align: center; color: var(--text-muted);">No contact messages found.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PAGINATION -->
+  {% if total_pages > 1 %}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px;">
+      <span style="font-size: 12px; color: var(--text-muted);">Page {{ current_page }} of {{ total_pages }}</span>
+      <div style="display: flex; gap: 6px;">
+        {% if current_page > 1 %}
+          <a href="/admin/messages?page={{ current_page - 1 }}&search={{ search_query }}&filter_read={{ filter_read }}" class="admin-btn admin-btn-secondary admin-btn-sm">Prev</a>
+        {% endif %}
+        {% if current_page < total_pages %}
+          <a href="/admin/messages?page={{ current_page + 1 }}&search={{ search_query }}&filter_read={{ filter_read }}" class="admin-btn admin-btn-secondary admin-btn-sm">Next</a>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

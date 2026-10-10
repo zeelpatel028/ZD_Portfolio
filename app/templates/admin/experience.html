@@ -1,0 +1,172 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<div class="admin-header-row">
+  <div>
+    <h1>Company & Work Experience</h1>
+    <p style="font-size: 12px; color: var(--text-muted);">Manage your professional roles, internships, company collaborations, responsibilities, and achievements</p>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px;">
+
+  <!-- FORM CARD: ADD / EDIT EXPERIENCE -->
+  <div class="admin-card">
+    <div class="admin-card-header">
+      <div class="admin-card-title">
+        <i class="fa-solid fa-briefcase"></i> {{ 'Edit Experience' if editing_exp else 'Add New Experience' }}
+      </div>
+      {% if editing_exp %}
+        <a href="/admin/experience" class="admin-btn admin-btn-secondary admin-btn-sm">Cancel</a>
+      {% endif %}
+    </div>
+
+    <form action="/admin/experience" method="POST" enctype="multipart/form-data">
+      {% if editing_exp %}
+        <input type="hidden" name="exp_id" value="{{ editing_exp.id }}">
+      {% endif %}
+
+      <div class="admin-form-group">
+        <label for="company_name">Company Name *</label>
+        <input type="text" id="company_name" name="company_name" class="admin-input" placeholder="e.g. Acme Tech Innovations" value="{{ editing_exp.company_name if editing_exp else '' }}" required>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="role_title">Role / Job Title *</label>
+        <input type="text" id="role_title" name="role_title" class="admin-input" placeholder="e.g. Backend Developer Intern" value="{{ editing_exp.role_title if editing_exp else '' }}" required>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="admin-form-group">
+          <label for="employment_type">Employment Type</label>
+          <select id="employment_type" name="employment_type" class="admin-select">
+            <option value="Full-time" {% if editing_exp and editing_exp.employment_type == 'Full-time' %}selected{% endif %}>Full-time</option>
+            <option value="Part-time" {% if editing_exp and editing_exp.employment_type == 'Part-time' %}selected{% endif %}>Part-time</option>
+            <option value="Internship" {% if editing_exp and editing_exp.employment_type == 'Internship' %}selected{% endif %}>Internship</option>
+            <option value="Contract" {% if editing_exp and editing_exp.employment_type == 'Contract' %}selected{% endif %}>Contract</option>
+            <option value="Freelance" {% if editing_exp and editing_exp.employment_type == 'Freelance' %}selected{% endif %}>Freelance</option>
+          </select>
+        </div>
+        <div class="admin-form-group">
+          <label for="location">Location / Remote Status</label>
+          <input type="text" id="location" name="location" class="admin-input" placeholder="Remote / Ahmedabad, India" value="{{ editing_exp.location if editing_exp and editing_exp.location else '' }}">
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="admin-form-group">
+          <label for="start_date">Start Date *</label>
+          <input type="text" id="start_date" name="start_date" class="admin-input" placeholder="e.g. Jan 2026" value="{{ editing_exp.start_date if editing_exp else '' }}" required>
+        </div>
+        <div class="admin-form-group">
+          <label for="end_date">End Date</label>
+          <input type="text" id="end_date" name="end_date" class="admin-input" placeholder="e.g. Present or Jun 2026" value="{{ editing_exp.end_date if editing_exp else 'Present' }}">
+        </div>
+      </div>
+
+      <div class="admin-checkbox-group">
+        <input type="checkbox" id="is_current" name="is_current" value="true" {% if editing_exp and editing_exp.is_current %}checked{% endif %}>
+        <label for="is_current" style="margin-bottom:0;">Currently Working Here</label>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="company_description">Company Description</label>
+        <textarea id="company_description" name="company_description" class="admin-textarea" rows="2" placeholder="Brief overview of what the company does">{{ editing_exp.company_description if editing_exp and editing_exp.company_description else '' }}</textarea>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="responsibilities">Key Responsibilities (One per line)</label>
+        <textarea id="responsibilities" name="responsibilities" class="admin-textarea" rows="3" placeholder="Designed and implemented RESTful APIs in FastAPI&#10;Optimized SQL database query speeds by 40%">{{ editing_exp.responsibilities | join('\n') if editing_exp else '' }}</textarea>
+      </div>
+
+      <div class="admin-form-group">
+        <label for="tech_stack">Technologies Used (Comma-separated)</label>
+        <input type="text" id="tech_stack" name="tech_stack" class="admin-input" placeholder="Python, FastAPI, PostgreSQL, Docker, Git" value="{{ editing_exp.tech_stack | join(', ') if editing_exp else '' }}">
+      </div>
+
+      <div class="admin-form-group">
+        <label for="company_url">Company Website URL</label>
+        <input type="url" id="company_url" name="company_url" class="admin-input" placeholder="https://company.com" value="{{ editing_exp.company_url if editing_exp and editing_exp.company_url else '' }}">
+      </div>
+
+      <div class="admin-form-group">
+        <label for="company_logo">Company Logo File (Optional)</label>
+        <input type="file" id="company_logo" name="company_logo" class="admin-input">
+      </div>
+
+      <div class="admin-checkbox-group">
+        <input type="checkbox" id="is_published" name="is_published" value="true" {% if not editing_exp or editing_exp.is_published %}checked{% endif %}>
+        <label for="is_published" style="margin-bottom:0;">Published (Visible on portfolio)</label>
+      </div>
+
+      <button type="submit" class="admin-btn admin-btn-primary" style="width: 100%; margin-top: 10px;">
+        <i class="fa-solid fa-floppy-disk"></i> {{ 'Update Experience' if editing_exp else 'Add Experience' }}
+      </button>
+    </form>
+  </div>
+
+  <!-- TABLE CARD: EXPERIENCE LIST -->
+  <div class="admin-card">
+    <div class="admin-card-header">
+      <div class="admin-card-title"><i class="fa-solid fa-list-check"></i> Work Experience List</div>
+    </div>
+
+    <div class="admin-table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Company & Role</th>
+            <th>Type / Location</th>
+            <th>Period</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for exp in experiences %}
+            <tr>
+              <td>
+                <div style="font-weight: 600; color: var(--text-bright);">{{ exp.company_name }}</div>
+                <div style="font-size: 11px; color: var(--color-peach);">{{ exp.role_title }}</div>
+              </td>
+              <td>
+                <span class="admin-badge admin-badge-info" style="font-size: 10px;">{{ exp.employment_type or 'Full-time' }}</span>
+                {% if exp.location %}
+                  <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">{{ exp.location }}</div>
+                {% endif %}
+              </td>
+              <td><span style="font-size: 11px; color: var(--color-taupe);">{{ exp.start_date }} – {{ exp.end_date or 'Present' }}</span></td>
+              <td>
+                <form action="/admin/experience/{{ exp.id }}/toggle-published" method="POST" style="display:inline;">
+                  {% if exp.is_published %}
+                    <button type="submit" class="admin-badge admin-badge-success" style="cursor:pointer; border:none;">Published</button>
+                  {% else %}
+                    <button type="submit" class="admin-badge admin-badge-muted" style="cursor:pointer; border:none;">Hidden</button>
+                  {% endif %}
+                </form>
+              </td>
+              <td>
+                <div style="display: flex; gap: 6px;">
+                  <a href="/admin/experience?edit_id={{ exp.id }}" class="admin-btn admin-btn-secondary admin-btn-sm" title="Edit">
+                    <i class="fa-solid fa-pen"></i>
+                  </a>
+                  <form action="/admin/experience/{{ exp.id }}/delete" method="POST" class="confirm-delete" data-item-title="{{ exp.company_name }} ({{ exp.role_title }})">
+                    <button type="submit" class="admin-btn admin-btn-danger admin-btn-sm" title="Delete">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="5" style="text-align: center; color: var(--text-muted);">No experience entries found. Add your first role using the form.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
